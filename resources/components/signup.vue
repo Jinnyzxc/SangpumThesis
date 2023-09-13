@@ -8,44 +8,39 @@
                 </div>
                 <form method="post" @submit.prevent="submit">
                     <div class="px-5 py-3">
-                        <h1 class="font-bold text-center text-2xl mb-5"> Login </h1>
+                        <h1 class="font-bold text-center text-2xl mb-5"> Sign Up </h1>
                         <span class=" flex justify-center text-center"> as buyer </span>
                     </div>
                     <div class="px-5 py-3">
-                        <input type="text" placeholder="Username"  id="password" v-model="formInput.username"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required/>
+                        <input type="text" placeholder="Username" id="password" v-model="formInput.username"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                         <input type="password" placeholder="Password" id="password" v-model="formInput.password"
-                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <div class="py-2 flex gap-2">
-                            <div class="flex flex-row gap-8">
-                                <div class="">
-                                    <input type="checkbox">
-                                    <label class="" for="flexCheckIndeterminate">
-                                        Remember Password
-                                    </label>
-                                </div>
-                                <div class="">
-                                    <a href=""> <span class="no-underline hover:underline hover:decoration-blue-400">Forgot
-                                            Password</span></a>
-                                </div>
-                            </div>
-                        </div>
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                        <input type="password" placeholder="Confirm Password" id="password" v-model="formInput.confimrPassword"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                        <input type="email" placeholder="Email" id="password" v-model="formInput.email"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                       
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
-                            <span class="inline-block mr-2">Login</span>
+                            <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
                     {{ result }}
                     <div class="px-5 py-2">
                         <a href="" class="no-underline hover:underline">
-                            <span class="flex justify-center text-center">Don't Have an Account? Sign Up</span>
+                            <span class="flex justify-center text-center"> Already have Account? Login
+                            </span>
                         </a>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 </template>
+
+
 
 <script >
 //imports 
@@ -60,9 +55,12 @@ export default {
         return {
             formInput: {
                 username: '',
-                password: ''
+                password: '',
+                confimrPassword: '',
+                email: "",
+
             },
-            result:""
+            result: ""
         }
     },
     created() {
@@ -72,14 +70,14 @@ export default {
         async submit() {
             try {
                 const result = await axios.post('/api/auth/login', formInput)
-                if (result.status === 200 && result.data){
+                if (result.status === 200 && result.data) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token)
                     await router.push('home')
                 }
                 this.result = result
             }
             catch (ex) {
-                if(ex && ex.reponse.data && e.response.data.errors){
+                if (ex && ex.reponse.data && e.response.data.errors) {
 
                 }
             }
