@@ -12,14 +12,20 @@
                         <span class=" flex justify-center text-center"> as buyer </span>
                     </div>
                     <div class="px-5 py-3">
-                        <input type="text" placeholder="Username" id="password" v-model="formInput.username"
+                        <input type="text" name="username" placeholder="Username" id="password" v-model="formInput.username"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="password" placeholder="Password" id="password" v-model="formInput.password"
+                        <input type="password" name="password" placeholder="Password" id="password" v-model="formInput.password"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="password" placeholder="Confirm Password" id="password" v-model="formInput.confimrPassword"
+                        <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password" v-model="formInput.confirmPassword"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="email" placeholder="Email" id="password" v-model="formInput.email"
+                        <input type="email" name="email" placeholder="Email" id="password" v-model="formInput.email"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                        <select name="user_type" id="user_type" v-model="formInput.user_type" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required>
+                            <option disabled selected>Choose User Type</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Seller</option>
+                            <option value="3">Customer</option>
+                        </select>
                        
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
@@ -43,6 +49,7 @@
 
 
 <script >
+import axios from 'axios';
 //imports 
 
 export default {
@@ -56,8 +63,9 @@ export default {
             formInput: {
                 username: '',
                 password: '',
-                confimrPassword: '',
+                confirmPassword: '',
                 email: "",
+                user_type: '',
 
             },
             result: ""
@@ -69,8 +77,8 @@ export default {
     methods: {
         async submit() {
             try {
-                const result = await axios.post('/api/auth/login', formInput)
-                if (result.status === 200 && result.data) {
+                const result = await axios.post('/api/user/add', this.formInput)
+                if (result.status) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token)
                     await router.push('home')
                 }
