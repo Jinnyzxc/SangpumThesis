@@ -8,37 +8,20 @@
                 </div>
                 <form method="post" @submit.prevent="submit">
                     <div class="px-5 py-3">
-                        <h1 class="font-bold text-center text-2xl mb-5"> Sign Up </h1>
-                        <span class=" flex justify-center text-center"> as buyer </span>
+                        <h1 class="font-bold text-center text-2xl mb-5">Reset Password</h1>
                     </div>
                     <div class="px-5 py-3">
-                        <input type="text" name="username" placeholder="Username" id="password" v-model="formInput.username"
+                    
+                        <input type="password" name="password" placeholder="Password" id="reset-password" v-model="formInput.resetpassword"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="password" name="password" placeholder="Password" id="password" v-model="formInput.password"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password" v-model="formInput.confirmPassword"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <input type="email" name="email" placeholder="Email" id="password" v-model="formInput.email"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <select name="user_type" id="user_type" v-model="formInput.user_type" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required>
-                            <option disabled selected>Choose User Type</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Seller">Seller</option>
-                            <option value="Customer">Customer</option>
-                        </select>
-                       
+                        <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password" v-model="formInput.resetconfirmPassword"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />  
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
                     {{ result }}
-                    <div class="px-5 py-2">
-                        <a href="" class="no-underline hover:underline">
-                            <span class="flex justify-center text-center"> Already have Account? Login
-                            </span>
-                        </a>
-                    </div>
 
                 </form>
             </div>
@@ -55,11 +38,8 @@ export default {
     data() {
         return {
             formInput: {
-                username: '',
-                password: '',
-                confirmPassword: '',
-                email: '',
-                user_type: '',
+                resetpassword: '',
+                resetconfirmPassword: '',
             },
             result: '',
             validationErrors: {},
