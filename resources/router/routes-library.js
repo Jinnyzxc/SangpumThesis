@@ -25,6 +25,10 @@ const routes = [
         name: 'reset'
     },
     {
+        path: '/',
+        component: Home
+    },
+    {
         path: '/home',
         component: Home,
         name: 'home'
