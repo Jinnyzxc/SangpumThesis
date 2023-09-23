@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Users; 
+use App\Models\User; 
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash; 
@@ -26,7 +26,7 @@ class UsersController extends Controller
             ]
         );
 
-        $user = new Users;
+        $user = new User;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
@@ -36,7 +36,7 @@ class UsersController extends Controller
         if (!$user->save()) {
             $response['message'] = 'Error on adding. Contact your support.';
         } else {
-            $response['message'] = 'Member Successfully Created!';
+            $response['message'] = 'Account Successfully Created!';
             $response['status'] = true;
         }
 
