@@ -16,10 +16,12 @@
                         the love for K-Pop, where every product has a story and every transaction carries the excitement of
                         sharing fandom joy.</span>
                     <div class="justify-content relative  space-x-5 py-4">
-                        <button class="rounded-none bg-cyan-800 border-3 px-6 py-2 text-white">
+                        <button @click="redirectLogin('seller')"
+                            class="rounded-none bg-cyan-800 border-3 px-6 py-2 text-white">
                             Shop Now
                         </button>
-                        <button class="bg-transparent border-2 border-white px-8 py-2 text-white ">
+                        <button @click="redirectLogin('buyer')"
+                         class="bg-transparent border-2 border-white px-8 py-2 text-white ">
                             Sell Now
                         </button>
                     </div>
@@ -29,6 +31,22 @@
     </body>
 </template>
 <script>
-
+import login from './login.vue'
+import {vuex} from './../js/store/store'
+export default{
+    components:{
+        login        
+    },
+    data(){
+        return {
+        }
+    },
+    methods:{
+        redirectLogin(user){
+            vuex.dispatch('setUserIdentifier', user)
+            this.$router.push('/login')
+        }
+    }
+}
 </script>
 
