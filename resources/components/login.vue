@@ -72,7 +72,8 @@ export default {
                 if (response.status === 200 && response.data.status === true) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                     alert ('Successfuly Login')
-                    this.$router.push({ name: 'home' }); // Use the named route
+                    this.$router.push(response.url); // Use the named route
+
                 } else {
                     // Authentication failed, handle error
                     alert(response.data.error_data[0]);

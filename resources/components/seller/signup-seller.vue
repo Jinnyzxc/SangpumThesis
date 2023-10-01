@@ -5,8 +5,8 @@
                 <div class="px-5 py-5">
                     <ol class="flex items-center justify-center">
                         <li class="relative w-full mb-6">
-                            <div class="flex items-center">
-                                <div
+                            <div class="flex items-center" v-for="index in signUpSteps">
+                                <div v-if="index == true"
                                     class="z-10 flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
                                     <svg class="w-2.5 h-2.5 text-blue-100 dark:text-blue-300" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
@@ -14,38 +14,7 @@
                                             stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
                                     </svg>
                                 </div>
-                                <div class="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                            </div>
-                        </li>
-                        <li class="relative w-full mb-6">
-                            <div class="flex items-center">
-                                <div
-                                    class="z-10 flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                                    <svg class="w-2.5 h-2.5 text-blue-100 dark:text-blue-300" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                                    </svg>
-                                </div>
-                                <div class="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                            </div>
-                        </li>
-                        <li class="relative w-full mb-6">
-                            <div class="flex items-center">
-                                <div
-                                    class="z-10 flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                                    <svg class="w-2.5 h-2.5 text-blue-100 dark:text-blue-300" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                                    </svg>
-                                </div>
-                                <div class="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
-                            </div>
-                        </li>
-                        <li class="relative w-full mb-6">
-                            <div class="flex items-center">
-                                <div
+                                <div v-if="index == false"
                                     class="z-10 flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full ring-0 ring-white dark:bg-gray-700 sm:ring-8 dark:ring-gray-900 shrink-0">
                                     <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
@@ -53,17 +22,17 @@
                                             stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
                                     </svg>
                                 </div>
+                                <div v-if="true" class="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
                             </div>
                         </li>
                     </ol>
-
                 </div>
-                <h1><span class=" flex justify-center text-center"> Personal Information </span>
+                <h1><span class=" flex justify-center text-center"> {{ title }} </span>
                 </h1>
-                <form method="post" @submit.prevent="submit" class="m-8 ">
+                <form method="post" @submit.prevent="submit" class="m-8 " v-if="pages.firstPage">
                     <div class="grid gap-6 items-center md:grid-cols-2">
                         <div>
-                            <input type="text" id="last_name"
+                            <input items="" type="text" id="last_name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="First Name" required>
                         </div>
@@ -94,13 +63,13 @@
                         </div>
                     </div>
                     <div class="m-6 py-5">
-                        <button type="button" @click="submit"
+                        <button type="button" @click="nextSecondPage()"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
                 </form>
-                <form method="post" @submit.prevent="submit" class="m-8 ">
+                <form method="post" @submit.prevent="submit" class="m-8 " v-if="pages.secondPage">
                     <div class="grid gap-6 items-center md:grid-cols-2">
                         <div>
                             <input type="text" id="last_name"
@@ -124,16 +93,13 @@
                         </div>
                     </div>
                     <div class="m-6 py-5">
-                        <button type="button" @click="submit"
+                        <button type="button" @click="nextThirdPage()"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
                 </form>
-
-                <h1><span class=" flex justify-center text-center"> Shop Information </span>
-                </h1>
-                <form method="post" @submit.prevent="submit" class="m-8 ">
+                <form method="post" @submit.prevent="submit" class="m-8 " v-if="pages.thirdPage">
                     <div class="grid gap-6 items-center md:grid-cols-2">
                         <div>
                             <input type="text" id="last_name"
@@ -167,16 +133,13 @@
                         </div>
                     </div>
                     <div class="m-6 py-5">
-                        <button type="button" @click="submit"
+                        <button type="button" @click="nextFourthPage()"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
                 </form>
-
-                <h1><span class=" flex justify-center text-center"> Billing and Shop Credentials  </span>
-                </h1>
-                <form method="post" @submit.prevent="submit" class="m-8 ">
+                <form method="post" @submit.prevent="submit" class="m-8 " v-if="pages.fourthPage">
                     <div class="grid gap-6 items-center md:grid-cols-2">
                         <div>
                             <input type="text" id="last_name"
@@ -217,16 +180,55 @@
                     <div class="m-6 py-5">
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
-                            <span class="inline-block mr-2">Next</span>
+                            <span class="inline-block mr-2">Submit</span>
                         </button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </template>
   
 <script>
-
+export default{
+    data(){
+        return {
+            signUpSteps: [
+            {steps1: true},    
+            {steps2: true},    
+            {steps3: true},    
+            {steps4: true} 
+            ],
+            title: "Personal Information",
+            pages:{
+                firstPage: true,
+                secondPage: false,
+                thirdPage: false,
+                fourthPage: false
+            }
+        }
+    }, 
+    methods:{
+        nextSecondPage(){
+            this.pages.firstPage = false
+            this.pages.secondPage= true
+        },
+        nextThirdPage(){
+            this.title ="Shop Information"
+            this.pages.firstPage = false
+            this.pages.secondPage= false
+            this.pages.thirdPage = true 
+        },
+        nextFourthPage(){
+            this.title ="Billing and Shop Credentials"
+            this.pages.firstPage = false
+            this.pages.secondPage= false
+            this.pages.thirdPage = false
+            this.pages.fourthPage = true 
+        },
+        submit(){
+            this.$router.push('/login');
+        }
+    }
+}
 </script>

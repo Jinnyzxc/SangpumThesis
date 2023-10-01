@@ -20,13 +20,6 @@
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                         <input type="email" name="email" placeholder="Email" id="password" v-model="formInput.email"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <select name="user_type" id="user_type" v-model="formInput.user_type" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required>
-                            <option disabled selected>Choose User Type</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Seller">Seller</option>
-                            <option value="Customer">Customer</option>
-                        </select>
-                       
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
@@ -67,20 +60,19 @@ export default {
             if (typeof  vuex.state.userIdentifier === 'undefined' || vuex.state.userIdentifier === null){
                 return 'buyer'
             }
+            this.formInput.user_type = vuex.state.userIdentifier
            return  vuex.state.userIdentifier
         }
     },
     methods: {
         async submit() {
             try {
-                this.$route.params.user = this.userIdentifier
-                this.$router.push('/personal-info/:userIdentifier');
+                console.log(this.formInput.user_type)
                 const result = await axios.post('/api/user/add', this.formInput);
                 if (result.data.status) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token);
                     alert('Successfully Created');
-                    this.$route.params.user = this.userIdentifier
-                    this.$router.push('/personal-info/:userIdentifier');
+                    this.$router.push('/personal-info/' + this.formInput.user_type);
                 }
                 this.result = result.data;
             } catch (ex) {
