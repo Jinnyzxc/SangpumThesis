@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+    <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
         <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
             <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                 <div class="flex justify-center
@@ -9,7 +9,7 @@
                 <form method="post" @submit.prevent="submit">
                     <div class="px-5 py-3">
                         <h1 class="font-bold text-center text-2xl mb-5"> Login </h1>
-                        <span class=" flex justify-center text-center"> as buyer </span>
+                        <span class=" flex justify-center text-center"> as  {{ userIdentifier }} </span>
                     </div>
                     <div class="px-5 py-3">
                         <input name ="username" type="text" placeholder="Username"  id="username" v-model="formInput.username"
@@ -28,16 +28,15 @@
                                     <a href="http://127.0.0.1:8000/forgot"> <span class="no-underline hover:underline hover:decoration-blue-400">Forgot
                                             Password?</span></a>
                                 </div>
-                            </div>
+                            </div>     
                         </div>
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Login</span>
                         </button>
                     </div>
-                    {{ result }}
                     <div class="px-5 py-2">
-                        <a href="" class="no-underline hover:underline">
+                        <a href="/signup" class="no-underline hover:underline" @click="setUserAsIs(userIdentifier)">
                             <span class="flex justify-center text-center">Don't Have an Account? Sign Up</span>
                         </a>
                     </div>
@@ -49,6 +48,7 @@
 
 <script >
 import axios from 'axios';
+import {vuex} from './../js/store/store'
 
 export default {
     data() {
@@ -60,6 +60,11 @@ export default {
             errorMessage: ''
         }
     },
+    computed:{
+        userIdentifier(){
+           return  vuex.state.userIdentifier
+        }
+    },
     methods: {
         async submit() {
             try {
@@ -67,7 +72,8 @@ export default {
                 if (response.status === 200 && response.data.status === true) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                     alert ('Successfuly Login')
-                    this.$router.push({ name: 'home' }); // Use the named route
+                    this.$router.push(response.url); // Use the named route
+
                 } else {
                     // Authentication failed, handle error
                     alert(response.data.error_data[0]);
@@ -76,7 +82,7 @@ export default {
                 // Handle other errors here
                 alert('An error occurred while logging in.');
             }
-        }
+        },
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+    <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
         <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
             <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                 <div class="flex justify-center
@@ -9,7 +9,7 @@
                 <form method="post" @submit.prevent="submit">
                     <div class="px-5 py-3">
                         <h1 class="font-bold text-center text-2xl mb-5"> Sign Up </h1>
-                        <span class=" flex justify-center text-center"> as buyer </span>
+                         <span class=" flex justify-center text-center"> create {{ userIdentifier }} account </span>
                     </div>
                     <div class="px-5 py-3">
                         <input type="text" name="username" placeholder="Username" id="password" v-model="formInput.username"
@@ -20,36 +20,26 @@
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                         <input type="email" name="email" placeholder="Email" id="password" v-model="formInput.email"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                        <select name="user_type" id="user_type" v-model="formInput.user_type" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required>
-                            <option disabled selected>Choose User Type</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Seller">Seller</option>
-                            <option value="Customer">Customer</option>
-                        </select>
-                       
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
                     </div>
-                    {{ result }}
                     <div class="px-5 py-2">
-                        <a href="" class="no-underline hover:underline">
+                        <a href="/login" class="no-underline hover:underline">
                             <span class="flex justify-center text-center"> Already have Account? Login
                             </span>
                         </a>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </template>
 
-
-
 <script>
 import axios from 'axios';
+import {vuex} from './../js/store/store'
 
 export default {
     data() {
@@ -65,14 +55,24 @@ export default {
             validationErrors: {},
         };
     },
+    computed:{
+        userIdentifier(){
+            if (typeof  vuex.state.userIdentifier === 'undefined' || vuex.state.userIdentifier === null){
+                return 'buyer'
+            }
+            this.formInput.user_type = vuex.state.userIdentifier
+           return  vuex.state.userIdentifier
+        }
+    },
     methods: {
         async submit() {
             try {
+                console.log(this.formInput.user_type)
                 const result = await axios.post('/api/user/add', this.formInput);
                 if (result.data.status) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token);
                     alert('Successfully Created');
-                    this.$router.push('/login');
+                    this.$router.push('/personal-info/' + this.formInput.user_type);
                 }
                 this.result = result.data;
             } catch (ex) {

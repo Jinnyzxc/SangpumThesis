@@ -1,8 +1,13 @@
 <template>
-  <router-view/>
-  <body>
-    <h1 class="text-3xl font-bold underline">
-  </h1>
-  </body>
+  <staticHeader></staticHeader>
+  <router-view />
 </template>
+<script>
+import staticHeader from './resources/components/static/header.vue'
 
+export default {
+  components: {
+    staticHeader
+  }
+}
+</script>
