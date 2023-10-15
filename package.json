@@ -13,11 +13,13 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@fortawesome/vue-fontawesome": "^3.0.3",
         "@vitejs/plugin-vue": "^4.3.4",
         "apexcharts": "^3.43.0",
         "autoprefixer": "^10.4.15",
         "flowbite": "^1.8.1",
         "sass": "^1.66.1",
+        "vee-validate": "^4.11.8",
         "vue-router": "^4.2.4",
         "vuex": "^4.0.2"
     }
