@@ -7,7 +7,7 @@
                 px-5 py-3">
                     <img src="./../../assets/system/sangpum-logo.png" alt="">
                 </div>
-                <button v-if="!pages.firstPage" @click="backPreviousPage(pages)">
+                <button v-if="!pages.zeroPage" @click="backPreviousPage(pages)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                         viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                         <path
@@ -15,9 +15,25 @@
                     </svg>
                 </button>
                 <form method="post" @submit.prevent="submit" action="" class="no-line">
-
                     <div class="px-5 py-3">
                         <h1 class="font-bold text-center text-2xl mb-5"> {{ title }} </h1>
+                    </div>
+                    <div v-if="pages.zeroPage">
+                        <div class="px-5 py-3">
+                            <input type="text" name="username" placeholder="Username" id="password" v-model="buyerInfo.zeroPageData.username"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                            <input type="password" name="password" placeholder="Password" id="password" v-model="buyerInfo.zeroPageData.password"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                            <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password"
+                            v-model="buyerInfo.zeroPageData.confirmPassword" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full"
+                            required />
+                            <input type="email" name="email" placeholder="Email" id="password" v-model="buyerInfo.zeroPageData.email"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                            <button type="button" @click="nextSecondPage()"
+                                class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
+                                <span class="inline-block mr-2">Next</span>
+                            </button>
+                        </div>
                     </div>
                     <div v-if="pages.firstPage">
                         <div class="px-5 py-3">
@@ -33,7 +49,7 @@
                             <input name="bday" type="date" v-model="buyerInfo.firstPageData.bdate" placeholder="Birthdate"
                                 id="password" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
 
-                            <button type="button" @click="nextSecondPage()"
+                            <button type="button" @click="nextThirdPage()"
                                 class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                                 <span class="inline-block mr-2">Next</span>
                             </button>
@@ -54,7 +70,7 @@
                                 placeholder="Who is your first k-pop bias?" id="password"
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
 
-                            <button type="button" @click="nextThirdPage()"
+                            <button type="button" @click="nextFourthPage()"
                                 class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                                 <span class="inline-block mr-2">Next</span>
                             </button>
@@ -73,7 +89,7 @@
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                             <input name="bday" type="text" placeholder="Type of Govt. ID" v-model="combine_id" id=""
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input id="fileUpload" type="file" hidden required>
+                            <input id="fileUpload" type="file"  required>
                             <button @click="chooseFiles()">
                                 <div class="w-64 h-8 relative">
                                     <div class="w-64 h-8 left-0 top-0 absolute bg-gray-200 rounded-3xl"></div>
@@ -86,7 +102,7 @@
                                     </div>
                                 </div>
                             </button>
-                            <input id="fileUpload2" type="file" hidden required>
+                            <input id="fileUpload2" type="file"  required>
                             <button @click="chooseFiles2()">
                                 <div class="w-64 h-8 relative">
                                     <div class="w-64 h-8 left-0 top-0 absolute bg-gray-200 rounded-3xl"></div>
@@ -116,6 +132,13 @@ export default {
     data() {
         return {
             buyerInfo: {
+                zeroPageData: {
+                    user_type : 'buyer',
+                    username: '',
+                    password: '',
+                    confirmPassword: '',
+                    email: '',
+                },
                 firstPageData: {
                     firstName: '',
                     middleName: '',
@@ -139,7 +162,8 @@ export default {
             },
             title: "Personal Information",
             pages: {
-                firstPage: true,
+                zeroPage: true,
+                firstPage: false,
                 secondPage: false,
                 thirdPage: false,
                 fourthPage: false
@@ -163,6 +187,19 @@ export default {
         },
         nextSecondPage() {
             console.log('hello')
+            var items = this.buyerInfo.zeroPageData
+            let hasNullValue = this.checkIfFeildWithNull(items)
+
+            if (!hasNullValue) {
+                this.pages.zeroPage = false
+                this.pages.firstPage = true
+            }
+            else {
+                alert('You need to fill inputs fields ')
+            }
+        },
+        nextThirdPage() {
+            this.title = 'Personal Information'
             var items = this.buyerInfo.firstPageData
             let hasNullValue = this.checkIfFeildWithNull(items)
 
@@ -174,8 +211,8 @@ export default {
                 alert('You need to fill inputs fields ')
             }
         },
-        nextThirdPage() {
-            this.title = 'Address & Billing'
+        nextFourthPage() {
+            this.title = 'Biiling'
             var items = this.buyerInfo.secondPageData
             let hasNullValue = this.checkIfFeildWithNull(items)
 
@@ -219,7 +256,7 @@ export default {
         async submit() {
             let params = { ...this.commonSignUpData, ...this.buyerInfo }
             try {
-                const result = await axios.post('API for buyer', params);
+                const result = await axios.post('/api/buyer/add', params);
                 if (result.data.status) {
                     alert('Successfully Created');
                     vuex.dispatch('setUserIdentifier', this.commonSignUpData.user_type)

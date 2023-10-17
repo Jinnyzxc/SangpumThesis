@@ -66,7 +66,8 @@ export default {
                 this.$router.push('/login')
             }
             else{
-                this.$router.push('/signup')
+                this.$router.push('/personal-info/' + user);
+                //this.$router.push('/signup')
             }
             Modal.hide()
         }

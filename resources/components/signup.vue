@@ -72,6 +72,7 @@ export default {
         const result = await axios.post('/api/user/add', this.formInput);
         if (result.data.status) {
           localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token);
+          localStorage.setItem('user_type', result.data.token);
           alert('Successfully Created');
           vuex.dispatch('setCommonSignUpData', this.formInput)
           this.$router.push('/personal-info/' + this.formInput.user_type);
