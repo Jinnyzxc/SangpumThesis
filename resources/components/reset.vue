@@ -16,7 +16,7 @@
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                         <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password" v-model="formInput.resetconfirmPassword"
                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />  
-                        <button type="button" @click="submit"
+                        <button  type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             <span class="inline-block mr-2">Next</span>
                         </button>
