@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="m-6 py-5">
-                        <button v-if="currentPage !== 4" type="submit" @click="next()"
+                        <button v-if="currentPage !== 4" type="button" @click="next()"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                             Next</button>
                         <input v-if="currentPage === 4" type="submit" @click="submit()" value="Submit"
@@ -63,10 +63,10 @@ export default {
     data() {
         return {
             title: "Personal Information",
-            fields: signupConfig.signupFields,
-            signUpSteps: signupConfig.signupSteps,
+            fields: signupConfig.sellerConfig.signupFields,
+            signUpSteps: signupConfig.sellerConfig.signupSteps,
             currentPage: 1,
-            sellerField: signupConfig.sellerField,
+            sellerField: signupConfig.sellerConfig.sellerField,
             dataForm: {},
             fieldErrors: {},
             formattedData: [],
@@ -90,24 +90,30 @@ export default {
         },
     },
     watch: {
-
+        
     },
     methods: {
         formatData() {
-            for (const [key, value] of Object.entries(this.dataForm)) {
-                const paramTest = { propField: key, data: value }
-                this.formattedData.push(paramTest)
-            }
+           
         },
         validateData() {
-            for (const data in this.formattedData) {
-                if (data === '') {
+            console.log(this.dataForm)
+            console.log(test.length)
+            console.log(this.currencyPageField.length)
 
+            if( Object.key(this.dataForm).length !== this.currencyPageField.length)
+            {
+                console.log("There is field that is not filled up")
+            }
+            else {
+                console.log("Complete Filled Field")
+            }
+            for (const data in this.formattedData) {
+                if (data.data === '') {
+                    var prop = data.propField
+                    console.log("This field "+ {prop} +"is required")
                 }
             }
-        },
-        checkValidatedDataDuplication(field) {
-
         },
         stepFunc(index, currentPageFilled) {
             if (index == 1) {
@@ -136,7 +142,6 @@ export default {
                         alert(response.data.error_data[0]);
                     }
                 } catch (ex) {
-                    // Handle other errors here
                     alert('An error occurred while logging in.');
                 }
             }

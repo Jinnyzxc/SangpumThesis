@@ -9,7 +9,11 @@ import SellerPersonalInfo from './../components/seller/signup-seller.vue'
 import BuyerPersonalInfo from './../../resources/components/buyer/signup-buyer.vue'
 import DashboardSeller from './../components/seller/dashboardSeller.vue'
 import AdminDashboard from './../components/admin/dashboard.vue'
-import Shopping from './../components/buyer/shopping.vue'
+import ShoppingList from './../components/buyer/shoppingList.vue'
+import ShoppingCart from './../components/buyer/shoppingCart.vue'
+import AdminVerifyBuyer from './../components/admin/verificationSeller.vue'
+import AdminVerifySeller from './../components/admin/verificationBuyer.vue'
+
 
 const routes = [
     {
@@ -17,13 +21,25 @@ const routes = [
         component: SignupComponent
     },
     {
-        path: '/admin/dashboard',
+        path: '/admin',
         component: AdminDashboard
     },
     {
-        path: '/shopping-page',
-        component: Shopping
+        path: '/admin/verify-seller',
+        component: AdminVerifySeller
     },
+    {
+        path: '/admin/verify-buyer',
+        component: AdminVerifyBuyer
+    },
+    {
+        path: '/shopping-page',
+        component: ShoppingList
+    },
+    {
+        path: '/shopping-cart',
+        component: ShoppingCart
+    },    
     {
         path: '/personal-info/seller',
         component: SellerPersonalInfo
