@@ -35,6 +35,7 @@
 import signinRegister from './../signin-register.vue'
 import modal from './../../js/modal/modalService'
 
+
 export default {
   components: {
     signinRegister

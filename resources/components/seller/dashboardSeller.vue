@@ -274,6 +274,14 @@ export default {
         return{
 
         }
+    },
+    created(){
+        this.loadChart()
+    },
+    methods:{
+        loadChart(){
+            
+        }
     }
 }
 </script>

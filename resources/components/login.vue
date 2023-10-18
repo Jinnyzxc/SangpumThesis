@@ -73,7 +73,6 @@ export default {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                     alert ('Successfuly Login')
                     this.$router.push(response.url); // Use the named route
-
                 } else {
                     // Authentication failed, handle error
                     alert(response.data.error_data[0]);
