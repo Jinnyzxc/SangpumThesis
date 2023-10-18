@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/login', [LoginController::class, 'login']);
 Route::post('/user/add', [UsersController::class, 'add']);
+Route::post('/buyer/add', [UsersController::class, 'buyer']);
 
 Route::apiResource('todos', TodoController::class)->middleware('auth:sanctum');
 
