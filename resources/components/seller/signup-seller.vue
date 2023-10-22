@@ -1,5 +1,4 @@
 <template>
-
     <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
         <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-7xl ">
             <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
@@ -98,8 +97,6 @@ export default {
             return this.sellerField.personalInfo.firstPersonalInfo;
         },
     },
-    watch: {
-    },
     methods: {
         handleKeydown(event, fieldCode) {
             const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', '-'];
@@ -185,7 +182,9 @@ export default {
             this.validateData()
             if (this.currentPage === 4  ) {
                 try {
-                    const response = await axios.post('/api/seller/add', this.dataForm);
+                    const commonSignupData = JSON.parse(localStorage.getItem('commonSignupData'))
+                    const param = {...this.dataForm, ...commonSignupData}
+                    const response = await axios.post('/api/signup/seller', param);
                     if (response.status === 200 && response.data.status === true) {
                         localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                         alert('Successfuly Login')
