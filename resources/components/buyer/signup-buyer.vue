@@ -2,7 +2,6 @@
     <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
         <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
             <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-
                 <div class="flex justify-center
                 px-5 py-3">
                     <img src="./../../assets/system/sangpum-logo.png" alt="">
@@ -18,37 +17,14 @@
                     <div class="px-5 py-3">
                         <h1 class="font-bold text-center text-2xl mb-5"> {{ title }} </h1>
                     </div>
-                    <div v-if="pages.zeroPage">
-                        <div class="px-5 py-3">
-                            <input type="text" name="username" placeholder="Username" id="password" v-model="buyerInfo.zeroPageData.username"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input type="password" name="password" placeholder="Password" id="password" v-model="buyerInfo.zeroPageData.password"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password"
-                            v-model="buyerInfo.zeroPageData.confirmPassword" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full"
-                            required />
-                            <input type="email" name="email" placeholder="Email" id="password" v-model="buyerInfo.zeroPageData.email"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <button type="button" @click="nextSecondPage()"
-                                class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
-                                <span class="inline-block mr-2">Next</span>
-                            </button>
-                        </div>
-                    </div>
                     <div v-if="pages.firstPage">
+                        <div class="px-5 py-3" v-for="field in fields">
+                            <input :name="field.fieldCode" :type="field.properties.type"
+                                v-model="buyerInfo.firstPageData.firstName" :placeholder="field.properties.placeholder"
+                                :id="field.fieldCode" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full"
+                                required />
+                        </div>
                         <div class="px-5 py-3">
-                            <input name="firstName" type="text" v-model="buyerInfo.firstPageData.firstName"
-                                placeholder="First name" id="username"
-                                class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input name="middleName" type="text" v-model="buyerInfo.firstPageData.middleName"
-                                placeholder="Middle name" id="password"
-                                class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input name="lastName" type="text" v-model="buyerInfo.firstPageData.lastName"
-                                placeholder="Last name" id="username"
-                                class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input name="bday" type="date" v-model="buyerInfo.firstPageData.bdate" placeholder="Birthdate"
-                                id="password" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-
                             <button type="button" @click="nextThirdPage()"
                                 class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
                                 <span class="inline-block mr-2">Next</span>
@@ -69,11 +45,6 @@
                             <input name="kpopBias" type="date" v-model="buyerInfo.secondPageData.kpopBias"
                                 placeholder="Who is your first k-pop bias?" id="password"
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-
-                            <button type="button" @click="nextFourthPage()"
-                                class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
-                                <span class="inline-block mr-2">Next</span>
-                            </button>
                         </div>
                     </div>
                     <div v-if="pages.thirdPage">
@@ -89,7 +60,7 @@
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
                             <input name="bday" type="text" placeholder="Type of Govt. ID" v-model="combine_id" id=""
                                 class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-                            <input id="fileUpload" type="file"  required>
+                            <input id="fileUpload" type="file" required>
                             <button @click="chooseFiles()">
                                 <div class="w-64 h-8 relative">
                                     <div class="w-64 h-8 left-0 top-0 absolute bg-gray-200 rounded-3xl"></div>
@@ -102,7 +73,7 @@
                                     </div>
                                 </div>
                             </button>
-                            <input id="fileUpload2" type="file"  required>
+                            <input id="fileUpload2" type="file" required>
                             <button @click="chooseFiles2()">
                                 <div class="w-64 h-8 relative">
                                     <div class="w-64 h-8 left-0 top-0 absolute bg-gray-200 rounded-3xl"></div>
@@ -127,47 +98,14 @@
     </div>
 </template>
 <script>
+import signupConfig from '../../js/config/signupConfig'
 
 export default {
     data() {
         return {
-            buyerInfo: {
-                zeroPageData: {
-                    user_type : 'buyer',
-                    username: '',
-                    password: '',
-                    confirmPassword: '',
-                    email: '',
-                },
-                firstPageData: {
-                    firstName: '',
-                    middleName: '',
-                    lastName: '',
-                    bdate: '',
-                },
-                secondPageData: {
-                    nickname: '',
-                    zodiacSign: '',
-                    kpopGroup: '',
-                    kpopBias: '',
-                },
-                thirdPageData: {
-                    personalInfoAddress: '',
-                    zipCode: '',
-                    bankAccNum: '',
-                    govermentId1: 'Upload your Govt. ID',
-                    govermentId2: 'Upload your Govt. ID',
-                    combine_id: ''
-                }
-            },
             title: "Personal Information",
-            pages: {
-                zeroPage: true,
-                firstPage: false,
-                secondPage: false,
-                thirdPage: false,
-                fourthPage: false
-            }
+            fields: signupConfig.buyerConfig.signupFields,
+            dataForm: signupConfig.buyerConfig.dataForm
         }
     },
     watch() {
@@ -236,7 +174,7 @@ export default {
             // Find the page with a value of true
 
             Object.keys(myObject).forEach((key, value) => {
-                
+
                 console.log(key, value);
             });
             for (const key in pages) {

@@ -1,4 +1,61 @@
 export default {
+    buyerConfig:{
+        signupFields:[
+            {
+                "fieldCode": "firstname",
+                "properties": {
+                    "type": "text",
+                    "label": "First Name",
+                    "placeholder": "Enter First name",
+                },
+            },
+            {
+                "fieldCode": "middlename",
+                "properties": {
+                    "type": "text",
+                    "label": "Middle Name",
+                    "placeholder": "Enter Middle name",
+                },
+            },
+            {
+                "fieldCode": "lastname",
+                "properties": {
+                    "type": "text",
+                    "label": "Lastname",
+                    "placeholder": "Enter Lastname",
+                },
+            },
+            {
+                "fieldCode": "birthDate",
+                "properties": {
+                    "type": "date",
+                    "label": "Birth Date"
+                },
+            }
+        ],
+        dataForm: {
+            firstPageData: {
+                firstName: '',
+                middleName: '',
+                lastName: '',
+                bdate: '',
+            },
+            secondPageData: {
+                nickname: '',
+                zodiacSign: '',
+                kpopGroup: '',
+                kpopBias: '',
+            },
+            thirdPageData: {
+                personalInfoAddress: '',
+                zipCode: '',
+                bankAccNum: '',
+                govermentId1: 'Upload your Govt. ID',
+                govermentId2: 'Upload your Govt. ID',
+                combine_id: ''
+            }
+        },
+    },
     commonConfig: {
         minMaxValidation: {
             username: {
