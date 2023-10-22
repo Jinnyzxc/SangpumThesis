@@ -134,7 +134,7 @@ export default {
             if (this.currentPage === 5) {
                 console.log(this.formattedData);
                 try {
-                    const response = await axios.post('/api/signup/seller', this.formattedData);
+                    const response = await axios.post('/api/seller/add', this.dataForm);
                     if (response.status === 200 && response.data.status === true) {
                         localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                         alert('Successfuly Login')

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/user/curl', [UsersController::class, 'curl_test']);
 
 Route::get('/{pathMatch}', function (){
     return view('welcome');
