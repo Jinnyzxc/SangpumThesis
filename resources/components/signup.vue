@@ -2,26 +2,24 @@
   <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
     <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
       <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-        <div class="flex justify-center
-                px-5 py-3">
+        <div class="flex justify-center px-5 py-3">
           <img src="./../assets/system/sangpum-logo.png" alt="">
         </div>
-        <form method="post" @submit.prevent="submit">
+        <div>
           <div class="px-5 py-3">
             <h1 class="font-bold text-center text-2xl mb-5"> Sign Up </h1>
             <span class=" flex justify-center text-center"> create {{ userIdentifier }} account </span>
           </div>
+          <div class="px-5" v-for="field in fields">
+            <label :for="field.fieldCode"> {{ field.properties.label }}</label>
+            <input :type="field.properties.type" :name="field.fieldCode" :placeholder="field.properties.placeholder"
+              :id="field.fieldCode" v-model="formInput[field.fieldCode]"
+              @input="validateInput(field.fieldCode, formInput[field.fieldCode], field.properties.type)"
+              class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+            <span class="text-red-600">{{ fieldErrors[field.fieldCode] }}</span>
+          </div>
           <div class="px-5 py-3">
-            <input type="text" name="username" placeholder="Username" id="password" v-model="formInput.username"
-              class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-            <input type="password" name="password" placeholder="Password" id="password" v-model="formInput.password"
-              class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-            <input type="password" name="confirm_pass" placeholder="Confirm Password" id="password"
-              v-model="formInput.confirmPassword" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full"
-              required />
-            <input type="email" name="email" placeholder="Email" id="password" v-model="formInput.email"
-              class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
-            <button type="button" @click="submit"
+            <button type="button" @click="next()"
               class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
               <span class="inline-block mr-2">Next</span>
             </button>
@@ -32,19 +30,20 @@
               </span>
             </a>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import signupConfig from './../js/config/signupConfig'
 import { vuex } from './../js/store/store'
 
 export default {
   data() {
     return {
+      fields: signupConfig.commonConfig.signupFields,
       formInput: {
         username: '',
         password: '',
@@ -52,42 +51,86 @@ export default {
         email: '',
         user_type: '',
       },
+      fieldErrors: {},
+      minMaxValidation: signupConfig.commonConfig.minMaxValidation,
       result: '',
-      validationErrors: {},
     };
   },
   computed: {
     userIdentifier() {
       if (typeof vuex.state.userIdentifier === 'undefined' || vuex.state.userIdentifier === null) {
-        this.formInput.user_type = "buyer";
-        return 'buyer'
+        this.formInput.user_type = localStorage.getItem('userIdentity');
+        return this.formInput.user_type
       }
       this.formInput.user_type = vuex.state.userIdentifier
       return vuex.state.userIdentifier
     }
   },
   methods: {
-    async submit() {
-      try {
-        const result = await axios.post('/api/user/add', this.formInput);
-        if (result.data.status) {
-          localStorage.setItem('APP_DEMO_USER_TOKEN', result.data.token);
-          localStorage.setItem('user_type', result.data.token);
-          alert('Successfully Created');
-          vuex.dispatch('setCommonSignUpData', this.formInput)
-          this.$router.push('/personal-info/' + this.formInput.user_type);
-        }
+    validateInput(fieldCode, fieldInput, feildType) {
+      if (feildType === 'email') {
+        this.validateEmail(fieldCode, fieldInput)
       }
-      catch (ex) {
-        if (ex.response && ex.response.data && ex.response.data.errors) {
-          this.validationErrors = ex.response.data.errors;
-          alert('Validation error: ' + Object.values(this.validationErrors).flat().join(', '));
-        } else {
-          alert('An error occurred while creating the account.');
+      if (fieldCode === 'confirmPassword') {
+        this.validateConfirmPassword(fieldCode, fieldInput)
+      }
+      else {
+        this.validateMinMax(fieldCode, fieldInput)
+      }
+    },
+    validateMinMax(fieldCode, fieldInput) {
+      var data = this.minMaxValidation[fieldCode]
+      if (fieldInput.length < data.minChar) {
+        this.fieldErrors[fieldCode] = data.minCharValidationMessage
+      }
+      else if (fieldInput.length > data.maxChar) {
+        this.fieldErrors[fieldCode] = data.maxCharValidationMessage
+      }
+      else {
+        this.fieldErrors[fieldCode] = ''
+      }
+    },
+    validateConfirmPassword(fieldCode, confirmPass) {
+      if (confirmPass !== this.formInput.password) {
+        this.fieldErrors[fieldCode] = 'Password and Confirm Password not match'
+      }
+      else {
+        this.fieldErrors[fieldCode] = ''
+      }
+    },
+    validateEmail(fieldCode, email) {
+      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+      const isValidEmail = emailRegex.test(email);
+      if (isValidEmail) {
+        this.fieldErrors[fieldCode] = ''
+      } else {
+        this.fieldErrors[fieldCode] = 'Invalid Email Address.'
+      }
+    },
+    validateData() {
+      for (var key in this.formInput) {
+        let value = this.formInput[key];
+        if (value == '') {
+          this.fieldErrors[key] = 'This field is required'
         }
       }
     },
-  },
+    next() {
+      this.validateData()
+      if (this.hasNonFieldErrors()) {
+        localStorage.setItem('commonSignupData', JSON.stringify(this.formInput))
+        this.$router.push('/personal-info/' + this.formInput.user_type);
+      }
+    },
+    hasNonFieldErrors() {
+      for (let key in this.fieldErrors) {
+        if (this.fieldErrors.hasOwnProperty(key) && this.fieldErrors[key] !== '') {
+          return false;
+        }
+      }
+      return true;
+    },
+  }
 };
 </script>
  

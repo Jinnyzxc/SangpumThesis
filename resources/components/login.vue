@@ -62,7 +62,11 @@ export default {
     },
     computed:{
         userIdentifier(){
-           return  vuex.state.userIdentifier
+            const userType =vuex.state.userIdentifier 
+            if(typeof userType === 'undefined' || userType === null){
+                return localStorage.getItem('userIdentity')
+            }
+           return userType
         }
     },
     methods: {
