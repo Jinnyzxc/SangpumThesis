@@ -1,18 +1,151 @@
 export default {
+    commonConfig: {
+        minMaxValidation: {
+            username: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters",
+                maxChar: 40,
+                maxCharValidationMessage: "Maximum 40 character reached"
+            },
+            password: {
+                minChar: 4,
+                maxCharValidationMessage: "Maximum 40 character reached",
+                maxChar: 40,
+                minCharValidationMessage: "Enter at least 4 characters"
+            }
+        },
+        signupFields: [
+            {
+                "fieldCode": "username",
+                "properties": {
+                    "type": "text",
+                    "label": "Username",
+                    "placeholder": "Enter Username",
+                },
+            },
+            {
+                "fieldCode": "password",
+                "properties": {
+                    "type": "password",
+                    "label": "Password",
+                    "placeholder": "Enter Password",
+                },
+            }, 
+            {
+                "fieldCode": "confirmPassword",
+                "properties": {
+                    "type": "password",
+                    "label": "Confirm Password",
+                    "placeholder": "Enter Confirm Password",
+                },
+            },
+            {
+                "fieldCode": "email",
+                "properties": {
+                    "type": "email",
+                    "label": "Email",
+                    "placeholder": "Enter Email",
+                },
+            }
+        ]
+    },
     sellerConfig: {
+        minMaxValidation: {
+            firstname: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters",
+                maxChar: 40,
+                maxCharValidationMessage: "Maximum 40 character reached"
+            },
+            middlename: {
+                minChar: 4,
+                maxCharValidationMessage: "Maximum 40 character reached",
+                maxChar: 40,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            lastname: {
+                minChar: 4,
+                maxCharValidationMessage: "Maximum 40 character reached",
+                maxChar: 40,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            address: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            zipCode: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            nickname: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            zodiacSign: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            kpopBias: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            kpopGroup: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            shopAddress: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            shopZipCode: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            kpopGroup: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            shopName: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            shopAddress: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            shopZipCode: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            contactNumber: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            dtiNumber: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            bankAccNum: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            brgyClearance: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            businessPermit: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+        },
         signupFields: [
             {
                 "fieldCode": "firstname",
                 "properties": {
-                    "type": "name",
-                    "label": "firstname",
-                    "placeholder": "Please enter First Name",
-                    "minChar": "4",
-                    "maxCharValidationMessage": "Maximum 40 character reached",
-                    "maxChar": "40",
-                    "minCharValidationMessage": "Enter at least 4 characters"
+                    "type": "text",
+                    "label": "First Name",
+                    "placeholder": "Enter First name",
                 },
-
             },
             {
                 "fieldCode": "birthDate",
@@ -20,46 +153,40 @@ export default {
                     "type": "date",
                     "label": "Birth Date"
                 },
-
             },
             {
                 "fieldCode": "middlename",
                 "properties": {
                     "type": "text",
-                    "label": "middlename",
-                    "placeholder": "Please Enter Middle Name",
-                    "minChar": "4",
-                    "maxCharValidationMessage": "Maximum 40 character reached",
-                    "maxChar": "40",
-                    "minCharValidationMessage": "Enter at least 4 characters",
+                    "label": "Middle Name",
+                    "placeholder": "Enter Middle name",
                 },
-
             },
             {
-                "fieldCode": "address",
+                "_fieldCode": "address",
+                get "fieldCode"() {
+                    return this["_fieldCode"];
+                },
+                set "fieldCode"(value) {
+                    this["_fieldCode"] = value;
+                },
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
+
                     "label": "Address",
                     "maxChar": "250",
                     "validationMessage": "Enter a valid address",
+                    "minChar": "4",
                     "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "Enter your complete address",
-                    "minChar": "4"
+                    "placeholder": "Address"
                 },
-
             },
             {
                 "fieldCode": "lastname",
                 "properties": {
                     "type": "text",
                     "label": "Last Name",
-                    "placeholder": "Please enter your last name",
-                    "minChar": "2",
-                    "maxCharValidationMessage": "Maximum 20 character reached",
-                    "maxChar": "20",
-                    "minCharValidationMessage": "Enter at least 2 characters",
+                    "placeholder": "Enter Last name",
                 },
 
             },
@@ -67,29 +194,16 @@ export default {
                 "fieldCode": "zipCode",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "BRGY / ZIP code",
-                    "minChar": "4"
+                    "label": "BRGY / ZIP code",
+                    "placeholder": "Enter BRGY / ZIP code",
                 },
-
             },
             {
                 "fieldCode": "nickname",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "Nick Name",
-                    "minChar": "4"
+                    "label": "Nickname",
+                    "placeholder": "What is your Nickname?",
                 },
 
             },
@@ -97,14 +211,8 @@ export default {
                 "fieldCode": "zodiacSign",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "zodiac Sign",
-                    "minChar": "4"
+                    "label": "Zodiac Sign",
+                    "placeholder": "What is your astrological sign?",
                 },
 
             },
@@ -112,14 +220,8 @@ export default {
                 "fieldCode": "kpopGroup",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "kpop Group",
-                    "minChar": "4"
+                    "label": "K-Pop Group",
+                    "placeholder": "What is your favorite k-pop group?",
                 },
 
             },
@@ -127,14 +229,8 @@ export default {
                 "fieldCode": "kpopBias",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "kpop Bias",
-                    "minChar": "4"
+                    "label": "K-Pop Bias",
+                    "placeholder": "Who is your first k-pop bias?",
                 },
 
             },
@@ -142,14 +238,8 @@ export default {
                 "fieldCode": "shopName",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "shop Name",
-                    "minChar": "4"
+                    "label": "Shop Name",
+                    "placeholder": "Enter Shop name",
                 },
 
             },
@@ -157,14 +247,8 @@ export default {
                 "fieldCode": "shopAddress",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "shopAddress",
-                    "minChar": "4"
+                    "label": "Shop Address",
+                    "placeholder": "Enter Complete Shop Address",
                 },
 
             },
@@ -172,29 +256,17 @@ export default {
                 "fieldCode": "shopZipCode",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "shopZipCode",
-                    "minChar": "4"
+                    "label": "BRGY / ZIP Code",
+                    "placeholder": "Enter BRGY / ZIP Code",
                 },
 
             },
             {
                 "fieldCode": "dateEst",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "date establish",
-                    "minChar": "4"
+                    "type": "date",
+                    "label": "Date Establish",
+                    "placeholder": "Enter Date Establish",
                 },
 
             },
@@ -202,114 +274,65 @@ export default {
                 "fieldCode": "contactNumber",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "contactNumber",
-                    "minChar": "4"
+                    "label": "Contact No.",
+                    "placeholder": "Enter Contact No.",
                 }
             },
             {
                 "fieldCode": "dtiNumber",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "dtiNumber",
-                    "minChar": "4"
+                    "label": "DTI No.",
+                    "placeholder": "Enter DTI No.",
                 },
             },
             {
                 "fieldCode": "bankAccNum",
                 "properties": {
                     "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "bank AccNum",
-                    "minChar": "4"
+                    "label": "Bank Account",
+                    "placeholder": "Enter your Bank/E-wallet Account No.",
                 },
             },
             {
                 "fieldCode": "govermentId1",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "govermentId1",
-                    "minChar": "4"
+                    "type": "file",
+                    "label": "Goverment ID",
+                    "placeholder": "Upload your Govt. ID",
                 },
             },
             {
                 "fieldCode": "govermentId2",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "shopZipCode",
-                    "minChar": "4"
+                    "type": "file",
+                    "label": "Goverment ID",
+                    "placeholder": "Upload your Govt. ID",
                 },
             },
             {
                 "fieldCode": "dtiPermit",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "bank AccNum",
-                    "minChar": "4"
+                    "type": "file",
+                    "label": "DTI Permit",
+                    "placeholder": "Upload your DTI permit",
                 },
-
             },
             {
                 "fieldCode": "brgyClearance",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "govermentId1",
-                    "minChar": "4"
+                    "type": "file",
+                    "label": "Barangay Clearance",
+                    "placeholder": "Upload your Barangay Clearance"
                 },
 
             },
             {
                 "fieldCode": "businessPermit",
                 "properties": {
-                    "type": "text",
-                    "minCharValidationMessage": "Enter at least 4 characters",
-                    "label": "Address",
-                    "maxChar": "250",
-                    "validationMessage": "Enter a valid address",
-                    "maxCharValidationMessage": "Maximum 250 character reached",
-                    "showOnProfilePage": "",
-                    "placeholder": "businessPermit",
-                    "minChar": "4"
+                    "type": "file",
+                    "label": "Business Permit",
+                    "placeholder": "Upload your Business Permit"
                 },
 
             },
@@ -323,36 +346,28 @@ export default {
             credentials: ['bankAccNum', 'govermentId1', 'govermentId2', 'dtiPermit', 'brgyClearance', 'businessPermit']
         },
         dataForm: {
-            firstPersonalInfo: {
-                firstname: '',
-                middlename: '',
-                lastname: '',
-                birthDate: '',
-                address: '',
-                zipCode: '',
-            },
-            secondPersonalIn: {
-                nickname: '',
-                zodiacSign: '',
-                kpopGroup: '',
-                kpopBias: "",
-            },
-            shopInfo: {
-                shopName: "",
-                shopAddress: "",
-                shopZipCode: "",
-                dateEst: "",
-                contactNumber: "",
-                dtiNumber: "",
-            },
-            credentials: {
-                bankAccNum: "",
-                govermentId1: "",
-                govermentId2: "",
-                dtiPermit: "",
-                brgyClearance: "",
-                businessPermit: "",
-            }
+            firstname: '',
+            middlename: '',
+            lastname: '',
+            birthDate: '',
+            address: '',
+            zipCode: '',
+            nickname: '',
+            zodiacSign: '',
+            kpopGroup: '',
+            kpopBias: "",
+            shopName: "",
+            shopAddress: "",
+            shopZipCode: "",
+            dateEst: "",
+            contactNumber: "",
+            dtiNumber: "",
+            bankAccNum: "",
+            govermentId1: "",
+            govermentId2: "",
+            dtiPermit: "",
+            brgyClearance: "",
+            businessPermit: "",
         },
         signupSteps: [false, false, false, false]
     }
