@@ -1,6 +1,6 @@
 export default {
-    buyerConfig:{
-        signupFields:[
+    buyerConfig: {
+        signupFields: [
             {
                 "fieldCode": "firstname",
                 "properties": {
@@ -31,30 +31,152 @@ export default {
                     "type": "date",
                     "label": "Birth Date"
                 },
+            },
+            {
+                "fieldCode": "nickname",
+                "properties": {
+                    "type": "text",
+                    "label": "Nickname",
+                    "placeholder": "What is your Nickname?",
+                },
+
+            },
+            {
+                "fieldCode": "zodiacSign",
+                "properties": {
+                    "type": "text",
+                    "label": "Zodiac Sign",
+                    "placeholder": "What is your astrological sign?",
+                },
+
+            },
+            {
+                "fieldCode": "kpopGroup",
+                "properties": {
+                    "type": "text",
+                    "label": "K-Pop Group",
+                    "placeholder": "What is your favorite k-pop group?",
+                },
+
+            },
+            {
+                "fieldCode": "kpopBias",
+                "properties": {
+                    "type": "text",
+                    "label": "K-Pop Bias",
+                    "placeholder": "Who is your first k-pop bias?",
+                },
+            },
+            {
+                "fieldCode": "address",
+                "properties": {
+                    "type": "text",
+                    "label": "Address",
+                    "placeholder": "Enter Address"
+                },
+            },
+            {
+                "fieldCode": "zipCode",
+                "properties": {
+                    "type": "text",
+                    "label": "BRGY / ZIP code",
+                    "placeholder": "Enter BRGY / ZIP code",
+                },
+            },
+            {
+                "fieldCode": "bankAccNum",
+                "properties": {
+                    "type": "text",
+                    "label": "Bank Account",
+                    "placeholder": "Enter your Bank/E-wallet Account No.",
+                },
+            },
+            {
+                "fieldCode": "govermentId1",
+                "properties": {
+                    "type": "file",
+                    "label": "Goverment ID",
+                    "placeholder": "Upload your Govt. ID",
+                },
+            },
+            {
+                "fieldCode": "govermentId2",
+                "properties": {
+                    "type": "file",
+                    "label": "Goverment ID",
+                    "placeholder": "Upload your Govt. ID",
+                },
             }
         ],
-        dataForm: {
-            firstPageData: {
-                firstName: '',
-                middleName: '',
-                lastName: '',
-                bdate: '',
-            },
-            secondPageData: {
-                nickname: '',
-                zodiacSign: '',
-                kpopGroup: '',
-                kpopBias: '',
-            },
-            thirdPageData: {
-                personalInfoAddress: '',
-                zipCode: '',
-                bankAccNum: '',
-                govermentId1: 'Upload your Govt. ID',
-                govermentId2: 'Upload your Govt. ID',
-                combine_id: ''
-            }
+        buyerField: {
+            firstPersonalInfo: ['firstname', 'middlename', 'lastname', 'birthDate'],
+            secondPersonalIn: ['nickname', 'zodiacSign', 'kpopGroup', 'kpopBias'],
+            addressBilling: ['bankAccNum', 'zipCode', 'address', 'govermentId1', 'govermentId2']
         },
+        dataForm: {
+            firstname: '',
+            middlename: '',
+            lastname: '',
+            birthDate: '',
+            nickname: '',
+            zodiacSign: '',
+            kpopGroup: '',
+            kpopBias: '',
+            address: '',
+            personalInfoAddress: '',
+            zipCode: '',
+            bankAccNum: '',
+            govermentId1: '',
+            govermentId2: '',
+        },
+        minMaxValidation: {
+            firstname: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters",
+                maxChar: 40,
+                maxCharValidationMessage: "Maximum 40 character reached"
+            },
+            middlename: {
+                minChar: 4,
+                maxCharValidationMessage: "Maximum 40 character reached",
+                maxChar: 40,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            lastname: {
+                minChar: 4,
+                maxCharValidationMessage: "Maximum 40 character reached",
+                maxChar: 40,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            address: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            zipCode: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            nickname: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            zodiacSign: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            kpopBias: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            kpopGroup: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+            bankAccNum: {
+                minChar: 4,
+                minCharValidationMessage: "Enter at least 4 characters"
+            },
+        }
     },
     commonConfig: {
         minMaxValidation: {
@@ -87,7 +209,7 @@ export default {
                     "label": "Password",
                     "placeholder": "Enter Password",
                 },
-            }, 
+            },
             {
                 "fieldCode": "confirmPassword",
                 "properties": {
@@ -220,13 +342,7 @@ export default {
                 },
             },
             {
-                "_fieldCode": "address",
-                get "fieldCode"() {
-                    return this["_fieldCode"];
-                },
-                set "fieldCode"(value) {
-                    this["_fieldCode"] = value;
-                },
+                "fieldCode": "address",
                 "properties": {
                     "type": "text",
 
@@ -427,7 +543,9 @@ export default {
             businessPermit: "",
         },
         signupSteps: [false, false, false, false]
-    }
+    },
+    allowKeys: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', '-'],
+    fieldNumberType: ['zipCode', 'shopZipCode', 'contactNumber', 'bankAccNum', 'dtiNumber']
 }
 
 

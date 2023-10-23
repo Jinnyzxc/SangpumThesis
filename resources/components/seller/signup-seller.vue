@@ -79,8 +79,6 @@ export default {
             minMaxValidation: signupConfig.sellerConfig.minMaxValidation
         };
     },
-    created() {
-    },
     computed: {
         currencyPageField() {
             if (this.currentPage === 2) {
@@ -99,8 +97,8 @@ export default {
     },
     methods: {
         handleKeydown(event, fieldCode) {
-            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', '-'];
-            const fieldNumberType = ['zipCode', 'shopZipCode', 'contactNumber', 'bankAccNum', 'dtiNumber']
+            const allowedKeys = signupConfig.allowKeys
+            const fieldNumberType = signupConfig.fieldNumberType
             if (!allowedKeys.includes(event.key) && fieldNumberType.includes(fieldCode)) {
                 event.preventDefault(); // Prevent input of non-numeric keys
             }
@@ -180,11 +178,11 @@ export default {
         },
         async submit() {
             this.validateData()
-            if (this.currentPage === 4  ) {
+            if (this.currentPage === 4) {
                 try {
                     const commonSignupData = JSON.parse(localStorage.getItem('commonSignupData'))
                     const param = {...this.dataForm, ...commonSignupData}
-                    const response = await axios.post('/api/signup/seller', param);
+                    const response = await axios.post('/api/seller/add', param);
                     if (response.status === 200 && response.data.status === true) {
                         localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                         alert('Successfuly Login')

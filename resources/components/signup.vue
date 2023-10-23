@@ -119,7 +119,7 @@ export default {
       this.validateData()
       if (this.hasNonFieldErrors()) {
         localStorage.setItem('commonSignupData', JSON.stringify(this.formInput))
-        this.$router.push('/personal-info/' + this.formInput.user_type);
+        this.$router.push('/signup/' + this.formInput.user_type);
       }
     },
     hasNonFieldErrors() {

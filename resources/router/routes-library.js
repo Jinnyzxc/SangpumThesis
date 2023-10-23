@@ -41,7 +41,7 @@ const routes = [
         component: ShoppingCart
     },    
     {
-        path: '/personal-info/seller',
+        path: '/signup/seller',
         component: SellerPersonalInfo
     },
     {
@@ -49,7 +49,7 @@ const routes = [
         component: DashboardSeller
     },
     {
-        path: '/personal-info/buyer',
+        path: '/signup/buyer',
         component: BuyerPersonalInfo
     },
     {
