@@ -1,5 +1,6 @@
 <template>
-    <div class="pt-24 items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+<!--testing --> 
+<div class="pt-24 items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
         <div class="flex items-center mb-4 sm:mb-0">
             <form class="sm:pr-3" action="#" method="GET">
                 <label for="products-search" class="sr-only">Search</label>
