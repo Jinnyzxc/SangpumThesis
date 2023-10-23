@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Ordered;
+use App\Models\Orderedproduct;
 
 
 use Illuminate\Http\Request;
@@ -32,7 +33,11 @@ class OrderedController extends Controller
         $ordered = new Ordered;
         $ordered->order_status = $request->order_status;
         $ordered->buyer_id	 = $request->buyer_id;
-        $ordered->product_id = $request->product_id;
+        $ordered->total	 = $request->total;
+        $ordered->billing_address	 = $request->billing_address;
+        $ordered->city	 = $request->city;
+        $ordered->state	 = $request->billing_address;
+        $ordered->zip_code	 = $request->zip_code;
         $ordered->date_created = now(); // Use the now() function to get the current date and time
 
         
@@ -40,6 +45,16 @@ class OrderedController extends Controller
         if (!$ordered->save()) {
             $response['message'] = 'Error on adding. Contact your support.';
         } else {
+            $arrProduct = $request->product_id;
+            foreach($arrProduct as $key => $value){
+                $orderedproduct = new Orderedproduct;
+                $orderedproduct->Order_id = $ordered->id;
+                $orderedproduct->Product_id	 = $value;
+                $orderedproduct->date_created = now(); // Use the now() function to get the current date and time
+                $orderedproduct->save();
+            }
+            
+        
             $response['message'] = 'Account Successfully Created!';
             $response['status'] = true;
         }

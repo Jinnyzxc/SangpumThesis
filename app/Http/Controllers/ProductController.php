@@ -18,12 +18,18 @@ class ProductController extends Controller
             $request, 
             [
                 'name' => 'required',
+                'category' => 'required',
+                'sub_category' => 'required',
+                'brand' => 'required',
+                'price' => 'required',
             ]
         );
 
         $product = new Products;
         $product->name = $request->name;
         $product->category = $request->category;
+        $product->sub_category = $request->sub_category;
+        $product->brand = $request->brand;
         $product->description = $request->description;
         $product->group_name = $request->group_name;
         $product->pre_order = $request->pre_order;
@@ -40,7 +46,7 @@ class ProductController extends Controller
         if (!$product->save()) {
             $response['message'] = 'Error on adding. Contact your support.';
         } else {
-            $response['message'] = 'Account Successfully Created!';
+            $response['message'] = 'Product Successfully Created!';
             $response['status'] = true;
         }
 
