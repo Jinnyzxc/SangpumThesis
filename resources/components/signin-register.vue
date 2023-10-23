@@ -62,12 +62,12 @@ export default {
         knowYourUser(user, isLogin){
             this.kyUser= user;
             vuex.dispatch('setUserIdentifier', this.kyUser)
+            localStorage.setItem('userIdentity', this.kyUser);
             if(isLogin){
                 this.$router.push('/login')
             }
             else{
-                this.$router.push('/personal-info/' + user);
-                //this.$router.push('/signup')
+                this.$router.push('/signup')
             }
             Modal.hide()
         }
