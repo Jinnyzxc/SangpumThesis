@@ -184,11 +184,11 @@ export default {
                 try {
                     const commonSignupData = JSON.parse(localStorage.getItem('commonSignupData'))
                     const param = {...this.dataForm, ...commonSignupData}
-                    const response = await axios.post('/api/signup/seller', param);
+                    const response = await axios.post('/api/seller/add', param);
                     if (response.status === 200 && response.data.status === true) {
                         localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
-                        alert('Successfuly Login')
-                        this.$router.push(response.url); // Use the named route
+                        alert('Account Successfuly Created')
+                        this.$router.push('/login'); // Use the named route
                     } else {
                         // Authentication failed, handle error
                         alert(response.data.error_data[0]);

@@ -16,24 +16,35 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $response = $this->json_response;
+    
         $this->validate($request, [
-                'username'    => 'required',
-                'password' => 'required',
-            ]);
-
-        $credentials = $request->only('username', 'password');
-
-       if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-
+            'username' => 'required',
+            'password' => 'required',
+            'user_type' => 'required',
+        ]);
+    
+        $credentials = $request->only('username', 'password', 'user_type');
+    
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
+    
             Session::put('username', $user->username);
             Session::put('user_type', $user->user_type);
-            $response['status'] = true;
-            $response['error_data'] = array();
-            $response['url'] = "/home";
-
+    
+            if ($user->user_type === 'seller') {
+                $response['status'] = true;
+                $response['error_data'] = [];
+                $response['url'] = '/seller/dashboard';
+            } elseif ($user->user_type === 'buyer') {
+                $response['status'] = true;
+                $response['error_data'] = [];
+                $response['url'] = '/buyer/dashboard';
+            } else {
+                // Redirect to a different URL or handle other user types as needed.
+            }
         }
-
+    
         return response()->json($response);
     }
+    
 }
