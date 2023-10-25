@@ -26,4 +26,7 @@ use App\Http\Controllers\ShippingController;
 Route::post('/auth/login', [LoginController::class, 'login']);
 Route::post('/buyer/add', [UsersController::class, 'buyer']);
 Route::post('/seller/add', [UsersController::class, 'seller']);
+Route::post('/auth/login', [LoginController::class, 'login']);
+Route::post('/product/add', [ProductController::class, 'product-add']);
+
 

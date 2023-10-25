@@ -11,27 +11,35 @@ class UsersController extends Controller
 
     public function buyer (Request $request) {
 
+        $this->validate(
+            $request, 
+            [
+            
+            'username' => 'required|unique:user',
+            'email' => 'required|unique:user'
+            ],
+        );
+
         $response = $this->json_response;
 
         $buyer = new User;
-        $buyer->user_type = $request->input('zeroPageData.user_type');
-        $buyer->username = $request->input('zeroPageData.username');
-        $buyer->password = Hash::make($request->input('zeroPageData.password'));
-        $buyer->email = $request->input('zeroPageData.email');
-        $buyer->firstname = $request->input('firstPageData.firstName');
-        $buyer->middleName = $request->input('firstPageData.middleName');
-        $buyer->lastName = $request->input('firstPageData.lastName');
-        $buyer->bdate = date('Y-m-d',strtotime($request->input('firstPageData.bdate')));
-        $buyer->nickname = $request->input('secondPageData.nickname');
-        $buyer->zodiacSign = $request->input('secondPageData.zodiacSign');
-        $buyer->kpopGroup = $request->input('secondPageData.kpopGroup');    
-        $buyer->kpopBias = $request->input('secondPageData.kpopBias');
-        $buyer->personalInfoAddress = $request->input('thirdPageData.personalInfoAddress');
-        $buyer->zipCode = $request->input('thirdPageData.zipCode');
-        $buyer->bankAccNum = $request->input('thirdPageData.bankAccNum');
-        $buyer->govermentId1 = $request->input('thirdPageData.govermentId1');
-        $buyer->govermentId2 = $request->input('thirdPageData.govermentId2');
-        $buyer->combine_id = $request->input('thirdPageData.combine_id');
+        $buyer->user_type = $request->user_type;
+        $buyer->username = $request->username;
+        $buyer->password = Hash::make($request['password']);
+        $buyer->email = $request->email;
+        $buyer->firstname = $request->firstname;
+        $buyer->middlename = $request->middlename;
+        $buyer->lastname = $request->lastname;
+        $buyer->birthDate = $request->birthDate;
+        $buyer->nickname = $request->nickname;
+        $buyer->zodiacSign = $request->zodiacSign;
+        $buyer->kpopGroup = $request->kpopGroup;    
+        $buyer->kpopBias = $request->kpopBias;
+        $buyer->address = $request->address;
+        $buyer->zipCode = $request->zipCode;
+        $buyer->bankAccNum = $request->bankAccNum;
+        $buyer->govermentId1 = $request->govermentId1;
+        $buyer->govermentId2 = $request->govermentId2;
         $buyer->date_created = now();
         
         if (!$buyer->save()) {
@@ -46,6 +54,16 @@ class UsersController extends Controller
 public function seller(Request $request) {
     
     $response = $this->json_response;
+
+    $this->validate(
+        $request, 
+        [
+        
+        'username' => 'required|unique:user',
+        'email' => 'required|unique:user'
+        ],
+    );
+
     
     $seller = new User;
     $seller->user_type = $request->user_type;
@@ -53,7 +71,7 @@ public function seller(Request $request) {
     $seller->password = Hash::make($request['password']);
     $seller->email = $request->email;
     $seller->firstname = $request->firstname;
-    $seller->middlename = $request->middlename;
+    $seller->middleame = $request->middlename;
     $seller->lastname = $request->lastname;
     $seller->birthDate = date('Y-m-d', strtotime($request->birthDate));
     $seller->address = $request->address;

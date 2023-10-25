@@ -128,6 +128,7 @@ export default {
             bankAccNum: '',
             govermentId1: '',
             govermentId2: '',
+            shopName: 'null'
         },
         minMaxValidation: {
             firstname: {

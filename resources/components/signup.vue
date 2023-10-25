@@ -10,7 +10,7 @@
             <h1 class="font-bold text-center text-2xl mb-5"> Sign Up </h1>
             <span class=" flex justify-center text-center"> create {{ userIdentifier }} account </span>
           </div>
-          <div class="px-5" v-for="field in fields">
+          <div class="px-5" v-for="field in fields" :key="field">
             <label :for="field.fieldCode"> {{ field.properties.label }}</label>
             <input :type="field.properties.type" :name="field.fieldCode" :placeholder="field.properties.placeholder"
               :id="field.fieldCode" v-model="formInput[field.fieldCode]"
@@ -120,6 +120,7 @@ export default {
       if (this.hasNonFieldErrors()) {
         localStorage.setItem('commonSignupData', JSON.stringify(this.formInput))
         this.$router.push('/signup/' + this.formInput.user_type);
+        console.log(this.formInput.user_type)
       }
     },
     hasNonFieldErrors() {

@@ -13,6 +13,7 @@ import ShoppingList from './../components/buyer/shoppingList.vue'
 import ShoppingCart from './../components/buyer/shoppingCart.vue'
 import AdminVerifyBuyer from './../components/admin/verificationSeller.vue'
 import AdminVerifySeller from './../components/admin/verificationBuyer.vue'
+import {isUserLoggedIn}  from './../js/config/login'
 
 
 const routes = [
@@ -83,6 +84,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
+});
 
 export default router;
