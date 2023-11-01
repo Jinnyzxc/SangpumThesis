@@ -71,7 +71,7 @@ public function seller(Request $request) {
     $seller->password = Hash::make($request['password']);
     $seller->email = $request->email;
     $seller->firstname = $request->firstname;
-    $seller->middleame = $request->middlename;
+    $seller->middlename = $request->middlename;
     $seller->lastname = $request->lastname;
     $seller->birthDate = date('Y-m-d', strtotime($request->birthDate));
     $seller->address = $request->address;
@@ -103,5 +103,67 @@ public function seller(Request $request) {
 
     return response()->json($response);
 }
+
+    public function getAllBuyers() {
+        $matchThese = [['user_type', '=', 'buyer']];
+        $buyers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $buyers,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAllSellers() {
+        $matchThese = [['user_type', '=', 'sellers']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+    
+    public function UsersApproval(Request $request) {
+        $data = User::find($request->id);
+        $data->approve = 1;
+
+
+        if (!$data->save()) {
+            $response['message'] = 'Error on updating. Contact your support.';
+        } else {
+            $response['message'] = 'Account Successfully Approved!';
+            $response['status'] = true;
+        }
+        return response()->json($response);
+    }
+
+    public function getAllSellersApprove() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '1']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAllSellersPending() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '0']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
 
 }

@@ -14,24 +14,25 @@ class LoginController extends Controller
     private $json_response = array('status' => false, 'error_status' => '200', 'error_data' => array('Username/Password does not match in our record.'));
     
     public function login(Request $request)
-    {
-        $response = $this->json_response;
-    
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required',
-            'user_type' => 'required',
-        ]);
-    
-        $credentials = $request->only('username', 'password', 'user_type');
-    
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-    
-            Session::put('username', $user->username);
-            Session::put('user_type', $user->user_type);
-    
-            if ($user->user_type === 'seller') {
+{
+    $response = $this->json_response;
+
+    $this->validate($request, [
+        'username' => 'required',
+        'password' => 'required',
+        'user_type' => 'required',
+    ]);
+
+    $credentials = $request->only('username', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        if ($user->user_type === 'seller') {
+            if ($user->approve == 1) {
+                Session::put('username', $user->username);
+                Session::put('user_type', $user->user_type);
+
                 $response['status'] = true;
                 $response['error_data'] = [];
                 $response['user_data'] = [
@@ -62,12 +63,22 @@ class LoginController extends Controller
                     'brgyClearance' => $user->brgyClearance,
                     'businessPermit' => $user->businessPermit
                 ];
+
                 $response['url'] = '/seller/dashboard';
-            } elseif ($user->user_type === 'buyer') {
-                $response['status'] = true;
-                $response['error_data'] = [];
-                $response['user_data'] = [
-                    'user_type' => $user->user_type,
+            } else {
+
+                $response['error_status'] = '401'; 
+                $response['error_data'] = ['Seller account not approved.'];
+            }
+        } elseif ($user->user_type === 'buyer') {
+
+            Session::put('username', $user->username);
+            Session::put('user_type', $user->user_type);
+
+            $response['status'] = true;
+            $response['error_data'] = [];
+            $response['user_data'] = [
+                'user_type' => $user->user_type,
                     'username'  => $user->username,
                     'password' => $user->password,
                     'email'  => $user->email,
@@ -85,14 +96,18 @@ class LoginController extends Controller
                     'bankAccNum'  => $user->bankAccNum,
                     'govermentId1'  => $user->govermentId1,
                     'govermentId2'  => $user->govermentId2   
-                ];
-                $response['url'] = '/shopping-page';
-            } else {
-                // Redirect to a different URL or handle other user types as needed.
-            }
-        }
-    
-        return response()->json($response);
+
+            ];
+
+            $response['url'] = '/shopping-page';
+        } 
+    } else {
+        $response['error_status'] = '401';
+        $response['error_data'] = ['Username/Password does not match in our record.'];
     }
+
+    return response()->json($response);
+}
+
     
 }
