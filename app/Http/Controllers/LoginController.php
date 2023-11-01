@@ -28,7 +28,7 @@ class LoginController extends Controller
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
 
-        if ($user->user_type === 'seller') {
+        if ($user->user_type === 'seller' || $user->user_type === 'buyer') {
             if ($user->approve == 1) {
                 Session::put('username', $user->username);
                 Session::put('user_type', $user->user_type);
@@ -44,63 +44,30 @@ class LoginController extends Controller
                     'middlename' => $user->middleName,
                     'lastname' => $user->lastName,
                     'birthDate'  => $user->birthDate,
-                    'address' => $user->address,
-                    'zipCode' => $user->zipCode,
                     'nickname' => $user->nickname,
                     'zodiacSign' => $user->zodiacSign,
-                    'kpopGroup' => $user->kpopGroup,    
+                    'kpopGroup' => $user->kpopGroup,
                     'kpopBias' => $user->kpopBias,
-                    'shopName' => $user->shopName,
-                    'shopAddress' => $user->shopAddress,
-                    'shopZipCode' => $user->shopZipCode,
-                    'dateEst' => $user->dateEst,
-                    'contactNumber' => $user->contactNumber,
-                    'dtiNumber' => $user->dtiNumber,
+                    'address' => $user->address,
+                    'zipCode' => $user->zipCode,
                     'bankAccNum' => $user->bankAccNum,
                     'govermentId1' => $user->govermentId1,
-                    'govermentId2' => $user->govermentId2,
-                    'dtiPermit' => $user->dtiPermit,
-                    'brgyClearance' => $user->brgyClearance,
-                    'businessPermit' => $user->businessPermit
+                    'govermentId2' => $user->govermentId2
                 ];
 
-                $response['url'] = '/seller/dashboard';
+                if ($user->user_type === 'seller') {
+                    $response['url'] = '/seller/dashboard';
+                } elseif ($user->user_type === 'buyer') {
+                    $response['url'] = '/shopping-page';
+                }
             } else {
-
-                $response['error_status'] = '401'; 
-                $response['error_data'] = ['Seller account not approved.'];
+                $response['error_status'] = '401';
+                $response['error_data'] = ['Account not yet approve.'];
             }
-        } elseif ($user->user_type === 'buyer') {
-
-            Session::put('username', $user->username);
-            Session::put('user_type', $user->user_type);
-
-            $response['status'] = true;
-            $response['error_data'] = [];
-            $response['user_data'] = [
-                'user_type' => $user->user_type,
-                    'username'  => $user->username,
-                    'password' => $user->password,
-                    'email'  => $user->email,
-                    'firstname'  => $user->firstname,
-                    'middlename'  => $user->middleName,
-                    'lastname' => $user->lastName,
-                    'birthDate'  => $user->birthDate,
-                    'nickname'  => $user->nickname,
-                    'zodiacSign'  => $user->zodiacSign,
-                    'kpopGroup'  => $user->kpopGroup,    
-                    'kpopBias'  => $user->kpopBias,
-                    'address'  => $user->address,
-                    'personalInfoAddress'  => $user->personalInfoAddress,
-                    'zipCode'  => $user->zipCode,
-                    'bankAccNum'  => $user->bankAccNum,
-                    'govermentId1'  => $user->govermentId1,
-                    'govermentId2'  => $user->govermentId2   
-
-            ];
-
-            $response['url'] = '/shopping-page';
-        } 
+        } else {
+            $response['error_status'] = '401';
+            $response['error_data'] = ['Invalid user type.'];
+        }
     } else {
         $response['error_status'] = '401';
         $response['error_data'] = ['Username/Password does not match in our record.'];
@@ -108,6 +75,7 @@ class LoginController extends Controller
 
     return response()->json($response);
 }
+
 
     
 }
