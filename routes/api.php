@@ -26,4 +26,11 @@ use App\Http\Controllers\ShippingController;
 Route::post('/auth/login', [LoginController::class, 'login']);
 Route::post('/buyer/add', [UsersController::class, 'buyer']);
 Route::post('/seller/add', [UsersController::class, 'seller']);
+Route::post('/auth/login', [LoginController::class, 'login']);
+Route::post('/product/add', [ProductController::class, 'product_add']);
+Route::post('/products', [ProductController::class, 'getAllProducts']);
+Route::post('/users', [UserController::class, 'UsersApproval']);
+Route::get('/buyers', [UserController::class, 'getAllBuyers']);
+Route::get('/sellers', [UserController::class, 'getAllSellers']);
+
 

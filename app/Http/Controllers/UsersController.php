@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash; 
 
@@ -13,104 +11,88 @@ class UsersController extends Controller
 
     public function buyer (Request $request) {
 
+        $this->validate(
+            $request, 
+            [
+            
+            'username' => 'required|unique:user',
+            'email' => 'required|unique:user'
+            ],
+        );
+
         $response = $this->json_response;
 
-        // $this->validate(
-        //     $request, 
-        //     [
-        //         'zeroPageData.username' => 'required|unique:user',
-        //         'zeroPageData.password' => ['required', 'min:6'],
-        //         'zeroPageData.confirmPassword' => 'required|same:password',
-        //         'zeroPageData.email' => 'required|email|unique:user', // Changed 'users' to 'unique:users' for email validation
-        //     ],
-        //     [
-        //         'password.regex' => 'Password must contain at least 1 character, 1 number, and 1 special character'
-        //     ]
-        // );
-
-
         $buyer = new User;
-        $buyer->user_type = $request->input('zeroPageData.user_type');
-        $buyer->username = $request->input('zeroPageData.username');
-        $buyer->password = Hash::make($request->input('zeroPageData.password'));
-        $buyer->email = $request->input('zeroPageData.email');
-        $buyer->firstname = $request->input('firstPageData.firstName');
-        $buyer->middleName = $request->input('firstPageData.middleName');
-        $buyer->lastName = $request->input('firstPageData.lastName');
-        $buyer->bdate = date('Y-m-d',strtotime($request->input('firstPageData.bdate')));
-        $buyer->nickname = $request->input('secondPageData.nickname');
-        $buyer->zodiacSign = $request->input('secondPageData.zodiacSign');
-        $buyer->kpopGroup = $request->input('secondPageData.kpopGroup');    
-        $buyer->kpopBias = $request->input('secondPageData.kpopBias');
-        $buyer->personalInfoAddress = $request->input('thirdPageData.personalInfoAddress');
-        $buyer->zipCode = $request->input('thirdPageData.zipCode');
-        $buyer->bankAccNum = $request->input('thirdPageData.bankAccNum');
-        $buyer->govermentId1 = $request->input('thirdPageData.govermentId1');
-        $buyer->govermentId2 = $request->input('thirdPageData.govermentId2');
-        $buyer->combine_id = $request->input('thirdPageData.combine_id');
-        $buyer->date_created = now(); // Use the now() function to get the current date and time
-
+        $buyer->user_type = $request->user_type;
+        $buyer->username = $request->username;
+        $buyer->password = Hash::make($request['password']);
+        $buyer->email = $request->email;
+        $buyer->firstname = $request->firstname;
+        $buyer->middlename = $request->middlename;
+        $buyer->lastname = $request->lastname;
+        $buyer->birthDate = $request->birthDate;
+        $buyer->nickname = $request->nickname;
+        $buyer->zodiacSign = $request->zodiacSign;
+        $buyer->kpopGroup = $request->kpopGroup;    
+        $buyer->kpopBias = $request->kpopBias;
+        $buyer->address = $request->address;
+        $buyer->zipCode = $request->zipCode;
+        $buyer->bankAccNum = $request->bankAccNum;
+        $buyer->govermentId1 = $request->govermentId1;
+        $buyer->govermentId2 = $request->govermentId2;
+        $buyer->date_created = now();
         
-
         if (!$buyer->save()) {
             $response['message'] = 'Error on adding. Contact your support.';
         } else {
             $response['message'] = 'Account Successfully Created!';
             $response['status'] = true;
         }
-
         return response()->json($response);
-
-
 }
 
-public function seller (Request $request) {
-
+public function seller(Request $request) {
+    
     $response = $this->json_response;
 
-    // $this->validate(
-    //     $request, 
-    //     [
-    //         'zeroPageData.username' => 'required|unique:user',
-    //         'zeroPageData.password' => ['required', 'min:6'],
-    //         'zeroPageData.confirmPassword' => 'required|same:password',
-    //         'zeroPageData.email' => 'required|email|unique:user', // Changed 'users' to 'unique:users' for email validation
-    //     ],
-    //     [
-    //         'password.regex' => 'Password must contain at least 1 character, 1 number, and 1 special character'
-    //     ]
-    // );
+    $this->validate(
+        $request, 
+        [
+        
+        'username' => 'required|unique:user',
+        'email' => 'required|unique:user'
+        ],
+    );
 
-
+    
     $seller = new User;
-    $seller->user_type = $request->input('user_type');
-    $seller->username = $request->input('username');
-    $seller->password = Hash::make($request->input('password'));
-    $seller->email = $request->input('email');
-    $seller->firstname = $request->input('firstPersonalInfo.firstName');
-    $seller->middleName = $request->input('firstPersonalInfo.middleName');
-    $seller->lastName = $request->input('firstPersonalInfo.lastName');
-    $seller->birthDate = date('Y-m-d',strtotime($request->input('firstPersonalInfo.birthDate')));
-    $seller->address = $request->input('firstPersonalInfo.address');
-    $seller->zipCode = $request->input('firstPersonalInfo.zipCode');
-    $seller->nickname = $request->input('secondPersonalIn.nickname');
-    $seller->zodiacSign = $request->input('secondPersonalIn.zodiacSign');
-    $seller->kpopGroup = $request->input('secondPersonalIn.kpopGroup');    
-    $seller->kpopBias = $request->input('secondPersonalIn.kpopBias');
-    $seller->shopName = $request->input('shopInfo.shopName');
-    $seller->shopAddress = $request->input('shopInfo.shopAddress');
-    $seller->zipCode = $request->input('shopInfo.shopZipCode');
-    $seller->dateEst = $request->input('shopInfo.dateEst');
-    $seller->contactNumber = $request->input('shopInfo.contactNumber');
-    $seller->dtiNumber = $request->input('shopInfo.dtiNumber');
-    $seller->bankAccNum = $request->input('credentials.bankAccNum');
-    $seller->govermentId1 = $request->input('credentials.govermentId2');
-    $seller->govermentId2 = $request->input('credentials.combine_id');
-    $seller->dtiPermit = $request->input('credentials.dtiPermit');
-    $seller->brgyClearance = $request->input('credentials.brgyClearance');
-    $seller->businessPermit = $request->input('credentials.businessPermit');
-
-    $seller->date_created = now(); // Use the now() function to get the current date and time
+    $seller->user_type = $request->user_type;
+    $seller->username = $request->username;
+    $seller->password = Hash::make($request['password']);
+    $seller->email = $request->email;
+    $seller->firstname = $request->firstname;
+    $seller->middlename = $request->middlename;
+    $seller->lastname = $request->lastname;
+    $seller->birthDate = date('Y-m-d', strtotime($request->birthDate));
+    $seller->address = $request->address;
+    $seller->zipCode = $request->zipCode;
+    $seller->nickname = $request->nickname;
+    $seller->zodiacSign = $request->zodiacSign;
+    $seller->kpopGroup = $request->kpopGroup;    
+    $seller->kpopBias = $request->kpopBias;
+    $seller->shopName = $request->shopName;
+    $seller->shopAddress = $request->shopAddress;
+    $seller->shopZipCode = $request->shopZipCode;
+    $seller->dateEst = $request->dateEst;
+    $seller->contactNumber = $request->contactNumber;
+    $seller->dtiNumber = $request->dtiNumber;
+    $seller->bankAccNum = $request->bankAccNum;
+    $seller->govermentId1 = $request->govermentId1;
+    $seller->govermentId2 = $request->govermentId2;
+    $seller->dtiPermit = $request->dtiPermit;
+    $seller->brgyClearance = $request->brgyClearance;
+    $seller->businessPermit = $request->businessPermit;
+    $seller->date_created = now();
 
     if (!$seller->save()) {
         $response['message'] = 'Error on adding. Contact your support.';
@@ -120,7 +102,68 @@ public function seller (Request $request) {
     }
 
     return response()->json($response);
-
 }
+
+    public function getAllBuyers() {
+        $matchThese = [['user_type', '=', 'buyer']];
+        $buyers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $buyers,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAllSellers() {
+        $matchThese = [['user_type', '=', 'sellers']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+    
+    public function UsersApproval(Request $request) {
+        $data = User::find($request->id);
+        $data->approve = 1;
+
+
+        if (!$data->save()) {
+            $response['message'] = 'Error on updating. Contact your support.';
+        } else {
+            $response['message'] = 'Account Successfully Approved!';
+            $response['status'] = true;
+        }
+        return response()->json($response);
+    }
+
+    public function getAllSellersApprove() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '1']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAllSellersPending() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '0']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
 
 }

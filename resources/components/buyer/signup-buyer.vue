@@ -14,7 +14,7 @@
                         <h1 class="font-bold text-center text-2xl mb-5"> {{ title }} </h1>
                     </div>
                     <div class="">
-                        <div class="item-center" v-for="(field, fieldKey) in fields">
+                        <div class="item-center" v-for="(field, fieldKey) in fields" key="field">
                             <div v-show="currencyPageField.indexOf(field.fieldCode) > -1" class="px-2 m-2">
                                 <label :for="field.fieldCode"> {{ field.properties.label }}</label>
                                 <input :name="field.fieldCode" :type="field.properties.type"
@@ -53,7 +53,7 @@ export default {
             fields: signupConfig.buyerConfig.signupFields,
             buyerField: signupConfig.buyerConfig.buyerField,
             dataForm: signupConfig.buyerConfig.dataForm,
-            currentPage: 3,
+            currentPage: 1,
             fieldErrors: {},
             minMaxValidation: signupConfig.sellerConfig.minMaxValidation
         }
@@ -170,7 +170,7 @@ export default {
                 try {
                     const result = await axios.post('/api/buyer/add', param);
                     if (result.data.status) {
-                        alert('Successfully Created');
+                        alert('Account Successfully Created');
                         this.$router.push('/login');
                     }
                 }
