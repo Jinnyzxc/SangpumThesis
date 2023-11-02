@@ -272,7 +272,7 @@ export default {
     },
     data(){
         return{
-
+            isAuthenticated: window.isAuthenticated,
         }
     },
     created(){
