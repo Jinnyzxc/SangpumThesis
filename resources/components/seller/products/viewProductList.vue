@@ -1,7 +1,6 @@
 <template>
     <menulist></menulist>
     <div class="m-10  ">
-
         <div class="my-5 items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"> {{ numberOfProducts }} Products
             </h1>

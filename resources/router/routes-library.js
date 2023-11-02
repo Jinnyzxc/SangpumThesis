@@ -13,7 +13,11 @@ import ShoppingList from './../components/buyer/shoppingList.vue';
 import ShoppingCart from './../components/buyer/shoppingCart.vue';
 import AdminVerifyBuyer from './../components/admin/verificationSeller.vue';
 import AdminVerifySeller from './../components/admin/verificationBuyer.vue';
+import product from './../components/seller/products/viewProductList.vue';
 import { isUserLoggedIn, getUserType } from './../js/config/login';
+import finance from './../components/seller/finance/viewFinance.vue';
+import shipping from './../components/seller/shipping/viewShipmentList.vue';
+
 
 const requireAuth = (to, from, next) => {
     if (isUserLoggedIn()) {
@@ -91,36 +95,26 @@ const routes = [
         component: product
     },
     {
-        path: '/seller/shipment',
-        component: shipping
-    },
-    {
         path: '/seller/finance',
         component: finance
     },
     {
         path: '/signup/seller',
         component: SellerPersonalInfo
-    },
-    {
-        path: '/seller/dashboard',
-        component: DashboardSeller
     },
     {
         path: '/seller/product',
-        component: product
+        component: product,
+        beforeResolve: requireSeller 
     },
     {
         path: '/seller/shipment',
         component: shipping
     },
     {
-        path: '/seller/finance',
-        component: finance
-    },
-    {
         path: '/signup/seller',
-        component: SellerPersonalInfo
+        component: SellerPersonalInfo,
+        beforeEnter: requireAdmin 
     },
     {
         path: '/signup/buyer',
