@@ -76,6 +76,9 @@ class LoginController extends Controller
     return response()->json($response);
 }
 
-
+    public function logout(Request $request) {
+        Auth::logout(); 
+        return redirect('/login'); 
+    }
     
 }
