@@ -58,10 +58,6 @@ const requireBuyer = (to, from, next) => {
 
 const routes = [
     {
-        path: '/signup',
-        component: SignupComponent
-    },
-    {
         path: '/admin',
         component: AdminDashboard,
         beforeEnter: requireAdmin 
@@ -83,8 +79,24 @@ const routes = [
     },
     {
         path: '/shopping-cart',
-        component: ShoppingCart,
-        beforeEnter: requireSellerOrBuyer 
+        component: ShoppingCart
+    },    
+    {
+        path: '/seller/dashboard',
+        component: DashboardSeller,
+        beforeEnter: requireSeller 
+    },
+    {
+        path: '/seller/product',
+        component: product
+    },
+    {
+        path: '/seller/shipment',
+        component: shipping
+    },
+    {
+        path: '/seller/finance',
+        component: finance
     },
     {
         path: '/signup/seller',
@@ -92,12 +104,31 @@ const routes = [
     },
     {
         path: '/seller/dashboard',
-        component: DashboardSeller,
-        beforeEnter: requireSeller 
+        component: DashboardSeller
+    },
+    {
+        path: '/seller/product',
+        component: product
+    },
+    {
+        path: '/seller/shipment',
+        component: shipping
+    },
+    {
+        path: '/seller/finance',
+        component: finance
+    },
+    {
+        path: '/signup/seller',
+        component: SellerPersonalInfo
     },
     {
         path: '/signup/buyer',
         component: BuyerPersonalInfo
+    },
+    {
+        path: '/signup',
+        component: SignupComponent
     },
     {
         path: '/login',
