@@ -28,7 +28,7 @@ class LoginController extends Controller
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
 
-        if ($user->user_type === 'seller' || $user->user_type === 'buyer') {
+        if ($user->user_type === 'seller' || $user->user_type === 'buyer'|| $user->user_type === 'admin'  ) {
             if ($user->approve == 1) {
                 Session::put('username', $user->username);
                 Session::put('user_type', $user->user_type);
@@ -59,6 +59,9 @@ class LoginController extends Controller
                     $response['url'] = '/seller/dashboard';
                 } elseif ($user->user_type === 'buyer') {
                     $response['url'] = '/shopping-page';
+                }
+                elseif ($user->user_type === 'admin') {
+                    $response['url'] = '/admin';
                 }
             } else {
                 $response['error_status'] = '401';

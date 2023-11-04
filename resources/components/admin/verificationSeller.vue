@@ -1,4 +1,6 @@
 <template>
+     <menuList></menuList>
+     SELLER
     <div
         class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
         <div class="w-full mb-1">
@@ -437,10 +439,12 @@
 
 <script>
 import toolbarHeader from './../static/toolBarHeader.vue'
+import menuList from './../static/menuList.vue';
+
 export default {
-    components: (
-        toolbarHeader
-    ),
+    components: {
+        menuList
+    },
     data() {
         return {
             title:"All Sellers", 

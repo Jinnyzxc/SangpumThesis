@@ -51,6 +51,9 @@ import axios from 'axios';
 import {vuex} from './../js/store/store'
 
 export default {
+    props:{
+        adminUserType: String
+    },
     data() {
         return {
             formInput: {
@@ -64,6 +67,9 @@ export default {
     computed:{
         userIdentifier(){
             const userType =vuex.state.userIdentifier 
+            if(this.adminUserType != null || typeof this.adminUserType  !== 'undefined'){
+                return this.adminUserType
+            }
             if(typeof userType === 'undefined' || userType === null){
                 return localStorage.getItem('userIdentity')
             }
@@ -76,6 +82,8 @@ export default {
                 this.formInput.user_type = this.userIdentifier
                 const response = await axios.post('/api/auth/login', this.formInput);
                 if (response.status === 200 && response.data.status === true) {
+                    vuex.dispatch('setUserIdentifier'. this.userIdentifier)
+                    localStorage.setItem('userIdentity', this.userIdentifier)
                     localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                     alert ('Successfuly Login')
                     this.$router.push(response.data.url); // Use the named route

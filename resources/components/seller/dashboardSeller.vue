@@ -87,9 +87,6 @@ export default {
         this.getProducts();
     },
     methods: {
-        getSellerInfo() {
-
-        },
         async getProducts() {
             const res = await fetch("https://652d6314f9afa8ef4b275e12.mockapi.io/product-list");
             const data = await res.json();
