@@ -11,12 +11,13 @@ import DashboardSeller from './../components/seller/dashboardSeller.vue';
 import AdminDashboard from './../components/admin/dashboard.vue';
 import ShoppingList from './../components/buyer/shoppingList.vue';
 import ShoppingCart from './../components/buyer/shoppingCart.vue';
-import AdminVerifyBuyer from './../components/admin/verificationSeller.vue';
-import AdminVerifySeller from './../components/admin/verificationBuyer.vue';
+import  AdminVerifySeller from './../components/admin/verificationSeller.vue';
+import  AdminVerifyBuyer from './../components/admin/verificationBuyer.vue';
 import product from './../components/seller/products/viewProductList.vue';
 import { isUserLoggedIn, getUserType } from './../js/config/login';
 import finance from './../components/seller/finance/viewFinance.vue';
 import shipping from './../components/seller/shipping/viewShipmentList.vue';
+import LoginAdmin from './../components/admin/loginAdmin.vue'
 
 
 const requireAuth = (to, from, next) => {
@@ -32,7 +33,7 @@ const requireAdmin = (to, from, next) => {
         next();
     } else {
         console.log('User is not an admin. Redirecting to /login');
-        next('/login');
+        next('/login/admin');
     }
 };
 
@@ -62,6 +63,10 @@ const requireBuyer = (to, from, next) => {
 
 const routes = [
     {
+        path: '/login/admin',
+        component: LoginAdmin,
+    },
+    {
         path: '/admin',
         component: AdminDashboard,
         beforeEnter: requireAdmin 
@@ -89,7 +94,7 @@ const routes = [
         path: '/seller/dashboard',
         component: DashboardSeller,
         beforeEnter: requireSeller 
-    },  
+    },
     {
         path: '/seller/finance',
         component: finance,

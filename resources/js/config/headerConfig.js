@@ -37,20 +37,8 @@ export default{
     },
     adminHeader: {
         left: [
-            {
-                menuheader: 'sms',
-                isIcon: true,
-                iconClass: 'sms',
-                url: '/seller/dashboard'
-            }
         ],
         right: [
-            {
-                menuheader: 'storefront',
-                isIcon: true,
-                iconClass: 'sms',
-                url: '/seller/dashboard'
-            }
         ]
     }
 }

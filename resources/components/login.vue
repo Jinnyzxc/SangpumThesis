@@ -51,6 +51,9 @@ import axios from 'axios';
 import {vuex} from './../js/store/store'
 
 export default {
+    props:{
+        adminUserType: String
+    },
     data() {
         return {
             formInput: {
@@ -64,6 +67,9 @@ export default {
     computed:{
         userIdentifier(){
             const userType =vuex.state.userIdentifier 
+            if(this.adminUserType != null || typeof this.adminUserType  !== 'undefined'){
+                return this.adminUserType
+            }
             if(typeof userType === 'undefined' || userType === null){
                 return localStorage.getItem('userIdentity')
             }
@@ -72,6 +78,7 @@ export default {
     },
     methods: {
         async submit() {
+
     try {
         this.formInput.user_type = this.userIdentifier;
         const response = await axios.post('/api/auth/login', this.formInput);
@@ -86,14 +93,13 @@ export default {
                 alert('Login failed: ' + response.data.error);
             } else {
                 alert('Account not yet approved.');
+
             }
         }
     } catch (error) {
         // Log the error for debugging
         console.error('An error occurred while logging in:', error);
         alert('An error occurred while logging in. Please try again.');
-    }
-}
     }
 }
 </script>

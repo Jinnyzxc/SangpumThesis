@@ -1,5 +1,6 @@
 <template>
   <!-- <sidebar></sidebar> -->
+  <menuList></menuList>
   <div
     class="pt-20 p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
     <div class="w-full mb-1">
@@ -99,10 +100,12 @@
 <script>
 import ApexCharts from 'apexcharts'
 import sidebar from './../seller/sidebar.vue'
+import menuList from '../static/menuList.vue'
 
 export default {
   components:{
-    sidebar
+    sidebar,
+    menuList
   },
   data() {
     return {
@@ -188,7 +191,6 @@ export default {
       }
       let lineChart = document.getElementById("main-chart")
       if (lineChart && typeof ApexCharts !== 'undefined') {
-        console.log(lineChart)
         const chart = new ApexCharts(lineChart, options);
         chart.render();
       }

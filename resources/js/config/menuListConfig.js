@@ -1,5 +1,22 @@
 export default {
     menulist: {
+        buyer: [],
+        admin: [
+            {
+                menu: 'Seller Information',
+                isIcon: false,
+                iconClass: '',
+                hasIcon: '',
+                url: '/admin/verify-seller'
+            },
+            {
+                menu: 'Buyer Information',
+                isIcon: false,
+                iconClass: '' ,
+                hasIcon: '',
+                url: '/admin/verify-buyer'
+            }
+        ],
         sellerMenuList: [
             {
                 menu: 'My shop',

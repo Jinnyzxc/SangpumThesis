@@ -23,10 +23,10 @@ class LoginController extends Controller
 
         $credentials = $request->only('username', 'password');
 
+
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         // If you reach here, the user is authenticated, and you have a JWT token.
         $user = JWTAuth::user();
         if ($user->approve == 1) {
@@ -52,10 +52,18 @@ class LoginController extends Controller
                     'govermentId2' => $user->govermentId2
                 ];
 
-            if ($user->user_type === 'seller') {
-                $response['url'] = '/seller/dashboard';
-            } elseif ($user->user_type === 'buyer') {
-                $response['url'] = '/shopping-page';
+
+                if ($user->user_type === 'seller') {
+                    $response['url'] = '/seller/dashboard';
+                } elseif ($user->user_type === 'buyer') {
+                    $response['url'] = '/shopping-page';
+                }
+                elseif ($user->user_type === 'admin') {
+                    $response['url'] = '/admin';
+                }
+            } else {
+                $response['error_status'] = '401';
+                $response['error_data'] = ['Account not yet approve.'];
             }
         } else {
             $response['error_status'] = '401';

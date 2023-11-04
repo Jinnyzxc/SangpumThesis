@@ -4,9 +4,10 @@
         <div class="my-5 items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"> {{ numberOfProducts }} Products
             </h1>
-            <button id="createProductButton"
+            <button id="createProductButton"  data-modal-target="add-product-modal"
+                data-modal-toggle="add-product-modal"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                type="button" :click="showCartPage()">
+                type="button" @click="showCartPage()">
                 Add new product
             </button>
         </div>
@@ -32,21 +33,12 @@
                                         {{ product.product_name }}
                                     </td>
                                     <td
-                                        class="justify-center items-center p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <table class="justify-center">
+                                        class="flex justify-center items-center p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <table class="justify-self-endjustify-center">
                                             <thead class="">
                                                 <tr class="p-10">
-                                                    <td class=" p-4 ">
-                                                        Variation
-                                                    </td>
-                                                    <td class="p-4">
-                                                        Price
-                                                    </td>
-                                                    <td class="p-4">
-                                                        Stock
-                                                    </td>
-                                                    <td class="p-4">
-                                                        Sales
+                                                    <td class=" p-4 " v-for="saleInfo in salesInfoHeader">
+                                                        {{ saleInfo.header }}
                                                     </td>
                                                 </tr>
                                             </thead>
@@ -108,7 +100,7 @@
                     </span>
                 </a>
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                        class="font-semibold text-gray-900 dark:text-white">{{pageIndex}}</span> of <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ pageIndex }}</span> of <span
                         class="font-semibold text-gray-900 dark:text-white">{{ numberOfProducts }}</span></span>
             </div>
             <div class="flex items-center space-x-3">
@@ -137,7 +129,7 @@
         <div
             class="justify-center sticky bottom-0 right-0 items-center w-full p-4 bg-white sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
             <div class="flex items-center mb-4 sm:mb-0">
-                <button 
+                <button
                     class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                     <span class="">
                         Select All
@@ -145,14 +137,14 @@
                 </button>
             </div>
             <div class="flex items-center space-x-3">
-                <button  href="#"
+                <button href="#"
                     class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-gray rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                     Delete
-            </button>
-                <button 
+                </button>
+                <button
                     class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-gray rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                     Publish
-            </button>
+                </button>
             </div>
         </div>
     </div>
@@ -163,6 +155,8 @@
 import AddProductForm from './addProductForm.vue'
 import menulist from './../../static/menuList.vue'
 import sampleData from './../../../js/config/sampleData.json'
+import {modal } from './../../../js/modal/modalService'
+import salesInfoHeader from './../../../js/config/tableConfig'
 
 export default {
     components: {
@@ -174,15 +168,22 @@ export default {
             showCart: false,
             products: {},
             numberOfProducts: 0,
-            pageIndex: 2
+            pageIndex: 2,
+            salesInfoHeader: salesInfoHeader.saleInfo
         }
     },
     created() {
         this.getUnpublishedProductList()
     },
+    mounted() {
+        this.getUnpublishedProductList()
+    },
     methods: {
         showCartPage() {
+            const modalName = 'addProductModal'
+            localStorage.setItem('modal', modalName)
             this.showCart = true
+            modal.show
         },
         getUnpublishedProductList() {
             this.products = sampleData.productInfo
