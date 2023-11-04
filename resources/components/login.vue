@@ -9,13 +9,14 @@
                 <form method="post" @submit.prevent="submit">
                     <div class="px-5 py-3">
                         <h1 class="font-bold text-center text-2xl mb-5"> Login </h1>
-                        <span class=" flex justify-center text-center"> as  {{ userIdentifier }} </span>
+                        <span class=" flex justify-center text-center"> as {{ userIdentifier }} </span>
                     </div>
                     <div class="px-5 py-3">
-                        <input name ="username" type="text" placeholder="Username"  id="username" v-model="formInput.username"
-                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required/>
-                        <input name = "password" type="password" placeholder="Password" id="password" v-model="formInput.password"
-                             class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                        <input name="username" type="text" placeholder="Username" id="username" v-model="formInput.username"
+                            class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+                        <input name="password" type="password" placeholder="Password" id="password"
+                            v-model="formInput.password" class="border rounded-full px-3 py-2 mt-1 mb-5 text-sm w-full"
+                            required />
                         <div class="py-2 flex gap-2">
                             <div class="flex flex-row gap-8">
                                 <div class="">
@@ -25,10 +26,11 @@
                                     </label>
                                 </div>
                                 <div class="">
-                                    <a href="http://127.0.0.1:8000/forgot"> <span class="no-underline hover:underline hover:decoration-blue-400">Forgot
+                                    <a href="/forgot"> <span
+                                            class="no-underline hover:underline hover:decoration-blue-400">Forgot
                                             Password?</span></a>
                                 </div>
-                            </div>     
+                            </div>
                         </div>
                         <button type="button" @click="submit"
                             class="transition duration-200 bg-teal-500/75 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-full text-sm shadow-sm hover:shadow-md font-semibold text-center ">
@@ -48,10 +50,10 @@
 
 <script >
 import axios from 'axios';
-import {vuex} from './../js/store/store'
+import { vuex } from './../js/store/store'
 
 export default {
-    props:{
+    props: {
         adminUserType: String
     },
     data() {
@@ -64,42 +66,44 @@ export default {
             errorMessage: ''
         }
     },
-    computed:{
-        userIdentifier(){
-            const userType =vuex.state.userIdentifier 
-            if(this.adminUserType != null || typeof this.adminUserType  !== 'undefined'){
+    computed: {
+        userIdentifier() {
+            const userType = vuex.state.userIdentifier
+            if (this.adminUserType != null || typeof this.adminUserType !== 'undefined') {
                 return this.adminUserType
             }
-            if(typeof userType === 'undefined' || userType === null){
+            if (typeof userType === 'undefined' || userType === null) {
                 return localStorage.getItem('userIdentity')
             }
-           return userType
+            return userType
         }
     },
     methods: {
         async submit() {
 
-    try {
-        this.formInput.user_type = this.userIdentifier;
-        const response = await axios.post('/api/auth/login', this.formInput);
+            try {
+                this.formInput.user_type = this.userIdentifier;
+                const response = await axios.post('/api/auth/login', this.formInput);
 
-        if (response.status === 200 && response.data.status === true) {
-            const token = response.data.token;
-            localStorage.setItem('APP_DEMO_USER_TOKEN', token);
-            alert('Successfully logged in');
-            this.$router.push(response.data.url); // Use the named route
-        } else {
-            if (response.data.error) {
-                alert('Login failed: ' + response.data.error);
-            } else {
-                alert('Account not yet approved.');
+                if (response.status === 200 && response.data.status === true) {
+                    const token = response.data.token;
+                    localStorage.setItem('APP_DEMO_USER_TOKEN', token);
+                    alert('Successfully logged in');
+                    this.$router.push(response.data.url); // Use the named route
+                } else {
+                    if (response.data.error) {
+                        alert('Login failed: ' + response.data.error);
+                    } else {
+                        alert('Account not yet approved.');
 
+                    }
+                }
+            } catch (error) {
+                // Log the error for debugging
+                console.error('An error occurred while logging in:', error);
+                alert('An error occurred while logging in. Please try again.');
             }
         }
-    } catch (error) {
-        // Log the error for debugging
-        console.error('An error occurred while logging in:', error);
-        alert('An error occurred while logging in. Please try again.');
     }
 }
 </script>
