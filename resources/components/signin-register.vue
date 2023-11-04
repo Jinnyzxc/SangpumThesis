@@ -62,6 +62,7 @@ export default {
         knowYourUser(user, isLogin){
             this.kyUser= user;
             vuex.dispatch('setUserIdentifier', this.kyUser)
+            localStorage.setItem('userIdentity', this.kyUser);
             if(isLogin){
                 this.$router.push('/login')
             }

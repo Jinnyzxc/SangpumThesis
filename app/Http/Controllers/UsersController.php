@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User; 
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash; 
 
@@ -10,36 +9,161 @@ class UsersController extends Controller
 {
     private $json_response = ['status' => false, 'message' => 'Failed', 'data' => []];
 
-    public function add(Request $request) {
-        $response = $this->json_response;
+    public function buyer (Request $request) {
 
         $this->validate(
             $request, 
             [
-                'username' => 'required|unique:user',
-                'password' => ['required', 'min:6'],
-                'confirmPassword' => 'required|same:password',
-                'email' => 'required|email|unique:user', // Changed 'users' to 'unique:users' for email validation
+            
+            'username' => 'required|unique:user',
+            'email' => 'required|unique:user'
             ],
-            [
-                'password.regex' => 'Password must contain at least 1 character, 1 number, and 1 special character'
-            ]
         );
 
-        $user = new User;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->email = $request->email;
-        $user->user_type = $request->user_type;
-        $user->date_created = now(); // Use the now() function to get the current date and time
+        $response = $this->json_response;
 
-        if (!$user->save()) {
+        $buyer = new User;
+        $buyer->user_type = $request->user_type;
+        $buyer->username = $request->username;
+        $buyer->password = Hash::make($request['password']);
+        $buyer->email = $request->email;
+        $buyer->firstname = $request->firstname;
+        $buyer->middlename = $request->middlename;
+        $buyer->lastname = $request->lastname;
+        $buyer->birthDate = $request->birthDate;
+        $buyer->nickname = $request->nickname;
+        $buyer->zodiacSign = $request->zodiacSign;
+        $buyer->kpopGroup = $request->kpopGroup;    
+        $buyer->kpopBias = $request->kpopBias;
+        $buyer->address = $request->address;
+        $buyer->zipCode = $request->zipCode;
+        $buyer->bankAccNum = $request->bankAccNum;
+        $buyer->govermentId1 = $request->govermentId1;
+        $buyer->govermentId2 = $request->govermentId2;
+        $buyer->date_created = now();
+        
+        if (!$buyer->save()) {
             $response['message'] = 'Error on adding. Contact your support.';
         } else {
             $response['message'] = 'Account Successfully Created!';
             $response['status'] = true;
         }
+        return response()->json($response);
+}
+
+public function seller(Request $request) {
+    
+    $response = $this->json_response;
+
+    $this->validate(
+        $request, 
+        [
+        
+        'username' => 'required|unique:user',
+        'email' => 'required|unique:user'
+        ],
+    );
+
+    
+    $seller = new User;
+    $seller->user_type = $request->user_type;
+    $seller->username = $request->username;
+    $seller->password = Hash::make($request['password']);
+    $seller->email = $request->email;
+    $seller->firstname = $request->firstname;
+    $seller->middlename = $request->middlename;
+    $seller->lastname = $request->lastname;
+    $seller->birthDate = date('Y-m-d', strtotime($request->birthDate));
+    $seller->address = $request->address;
+    $seller->zipCode = $request->zipCode;
+    $seller->nickname = $request->nickname;
+    $seller->zodiacSign = $request->zodiacSign;
+    $seller->kpopGroup = $request->kpopGroup;    
+    $seller->kpopBias = $request->kpopBias;
+    $seller->shopName = $request->shopName;
+    $seller->shopAddress = $request->shopAddress;
+    $seller->shopZipCode = $request->shopZipCode;
+    $seller->dateEst = $request->dateEst;
+    $seller->contactNumber = $request->contactNumber;
+    $seller->dtiNumber = $request->dtiNumber;
+    $seller->bankAccNum = $request->bankAccNum;
+    $seller->govermentId1 = $request->govermentId1;
+    $seller->govermentId2 = $request->govermentId2;
+    $seller->dtiPermit = $request->dtiPermit;
+    $seller->brgyClearance = $request->brgyClearance;
+    $seller->businessPermit = $request->businessPermit;
+    $seller->date_created = now();
+
+    if (!$seller->save()) {
+        $response['message'] = 'Error on adding. Contact your support.';
+    } else {
+        $response['message'] = 'Account Successfully Created!';
+        $response['status'] = true;
+    }
+
+    return response()->json($response);
+}
+
+    public function getAllBuyers() {
+        $matchThese = [['user_type', '=', 'buyer']];
+        $buyers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $buyers,
+        ];
 
         return response()->json($response);
     }
+
+    public function getAllSellers() {
+        $matchThese = [['user_type', '=', 'sellers']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+    
+    public function UsersApproval(Request $request) {
+        $data = User::find($request->id);
+        $data->approve = 1;
+
+
+        if (!$data->save()) {
+            $response['message'] = 'Error on updating. Contact your support.';
+        } else {
+            $response['message'] = 'Account Successfully Approved!';
+            $response['status'] = true;
+        }
+        return response()->json($response);
+    }
+
+    public function getAllSellersApprove() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '1']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getAllSellersPending() {
+        $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '0']];
+        $sellers = User::where($matchThese)->get();
+
+        $response = [
+            'status' => true,
+            'data' => $sellers,
+        ];
+
+        return response()->json($response);
+    }
+
 }

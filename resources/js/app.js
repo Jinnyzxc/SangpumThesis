@@ -3,14 +3,18 @@ import {createApp} from 'vue';
 import App from './../../App.vue';
 import router from  './../router/routes-library.js'
 import {vuex} from './store/store'
-/* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
-/* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-createApp(App).component('font-awesome-icon', FontAwesomeIcon)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCoffee as Coffee } from '@fortawesome/free-solid-svg-icons';
+// import { faCoffee as Regular  } from '@fortawesome/free-regular-svg-icons';
+library.add(Coffee);
 
-createApp(App).use(vuex)
-createApp(App).use(router).mount("#app");
+const app = createApp(App)
+
+app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(vuex);
+app.use(router);
+app.mount("#app");
 
 import('tailwindcss').Config
 

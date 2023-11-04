@@ -1,0 +1,80 @@
+{
+    "sellerId": "GUID",
+    "sellername": "Jinny",
+    "productInfo": [{
+        "product_image": "https://th.bing.com/th/id/OIP.8wvdbNWBNnm9N_baLrhUNAHaE8?pid=ImgDet&rs=1",
+        "product_name": "product name ",
+        "category": "category name",
+        "sub_category": "string",
+        "product_description": "some description",
+        "pre-order": true,
+        "salesInfo": [
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string",
+                "sales":"sales"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            }
+        ],
+        "shippingInfo": {
+            "weight": 0,
+            "parcel_size_z": 0,
+            "parcel_size_x": 0,
+            "parcel_size_y": 0,
+            "shipping_fee": "string"
+        }
+    },
+    {
+        "product_image": "string",
+        "product_name": "string",
+        "category": "string",
+        "sub_category": "string",
+        "product_description": "string",
+        "pre-order": true,
+        "salesInfo": [
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            },
+            {
+                "price": 0.0,
+                "stock": 0,
+                "variation": "string"
+            }
+        ],
+        "shippingInfo": {
+            "weight": 0,
+            "parcel_size_z": 0,
+            "parcel_size_x": 0,
+            "parcel_size_y": 0,
+            "shipping_fee": "string"
+        }
+    }
+]
+}

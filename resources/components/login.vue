@@ -55,24 +55,30 @@ export default {
         return {
             formInput: {
                 username: '',
-                password: ''
+                password: '',
+                user_type: ''
             },
             errorMessage: ''
         }
     },
     computed:{
         userIdentifier(){
-           return  vuex.state.userIdentifier
+            const userType =vuex.state.userIdentifier 
+            if(typeof userType === 'undefined' || userType === null){
+                return localStorage.getItem('userIdentity')
+            }
+           return userType
         }
     },
     methods: {
         async submit() {
             try {
+                this.formInput.user_type = this.userIdentifier
                 const response = await axios.post('/api/auth/login', this.formInput);
                 if (response.status === 200 && response.data.status === true) {
                     localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
                     alert ('Successfuly Login')
-                    this.$router.push(response.url); // Use the named route
+                    this.$router.push(response.data.url); // Use the named route
                 } else {
                     // Authentication failed, handle error
                     alert(response.data.error_data[0]);

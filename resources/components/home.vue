@@ -16,11 +16,11 @@
                         the love for K-Pop, where every product has a story and every transaction carries the excitement of
                         sharing fandom joy.</span>
                     <div class="justify-content relative  space-x-5 py-4">
-                        <button @click="redirectLogin('seller')"
+                        <button @click="redirectLogin('buyer')"
                             class="rounded-none bg-cyan-800 border-3 px-6 py-2 text-white">
                             Shop Now
                         </button>
-                        <button @click="redirectLogin('buyer')"
+                        <button @click="redirectLogin('seller')"
                          class="bg-transparent border-2 border-white px-8 py-2 text-white ">
                             Sell Now
                         </button>
@@ -43,6 +43,7 @@ export default{
     },
     methods:{
         redirectLogin(user){
+            localStorage.setItem('userIdentity', user);
             vuex.dispatch('setUserIdentifier', user)
             this.$router.push('/login')
         }
