@@ -1,4 +1,5 @@
 import { Modal } from 'flowbite';
+import { showCurrentModal } from './../config/login'
 const options = {
     placement: 'bottom-right',
     backdrop: 'dynamic',
@@ -15,4 +16,7 @@ const options = {
     }
   };
 
-  export default new Modal(document.querySelector('#defaultModal'), options);
+  const $targetEl = document.getElementById(showCurrentModal());
+
+ export const modal = new Modal($targetEl, options);
+

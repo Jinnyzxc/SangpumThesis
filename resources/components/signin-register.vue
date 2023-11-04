@@ -40,7 +40,6 @@
 import Login from './login.vue';
 import Signup from './signup.vue';
 import {vuex} from './../js/store/store'
-import Modal from './../js/modal/modalService'
 
 export default {
     name: 'login-signup',
@@ -69,7 +68,7 @@ export default {
             else{
                 this.$router.push('/signup')
             }
-            Modal.hide()
+            modal.hide()
         }
     }
 }

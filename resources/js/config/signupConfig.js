@@ -546,7 +546,7 @@ export default {
         signupSteps: [false, false, false, false]
     },
     allowKeys: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', '-'],
-    fieldNumberType: ['zipCode', 'shopZipCode', 'contactNumber', 'bankAccNum', 'dtiNumber']
+    fieldNumberType: ['zipCode', 'shopZipCode', 'contactNumber', 'bankAccNum', 'dtiNumber','price', 'stock', ]
 }
 
 

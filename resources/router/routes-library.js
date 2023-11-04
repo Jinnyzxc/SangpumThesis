@@ -11,9 +11,14 @@ import DashboardSeller from './../components/seller/dashboardSeller.vue';
 import AdminDashboard from './../components/admin/dashboard.vue';
 import ShoppingList from './../components/buyer/shoppingList.vue';
 import ShoppingCart from './../components/buyer/shoppingCart.vue';
-import AdminVerifyBuyer from './../components/admin/verificationSeller.vue';
-import AdminVerifySeller from './../components/admin/verificationBuyer.vue';
+import  AdminVerifySeller from './../components/admin/verificationSeller.vue';
+import  AdminVerifyBuyer from './../components/admin/verificationBuyer.vue';
+import product from './../components/seller/products/viewProductList.vue';
 import { isUserLoggedIn, getUserType } from './../js/config/login';
+import finance from './../components/seller/finance/viewFinance.vue';
+import shipping from './../components/seller/shipping/viewShipmentList.vue';
+import LoginAdmin from './../components/admin/loginAdmin.vue'
+
 
 const requireAuth = (to, from, next) => {
     if (isUserLoggedIn()) {
@@ -28,7 +33,7 @@ const requireAdmin = (to, from, next) => {
         next();
     } else {
         console.log('User is not an admin. Redirecting to /login');
-        next('/login');
+        next('/login/admin');
     }
 };
 
@@ -57,6 +62,10 @@ const requireBuyer = (to, from, next) => {
 };
 
 const routes = [
+    {
+        path: '/login/admin',
+        component: LoginAdmin,
+    },
     {
         path: '/admin',
         component: AdminDashboard,
@@ -87,40 +96,28 @@ const routes = [
         beforeEnter: requireSeller 
     },
     {
-        path: '/seller/product',
-        component: product
-    },
-    {
-        path: '/seller/shipment',
-        component: shipping
-    },
-    {
         path: '/seller/finance',
-        component: finance
+        component: finance,
+        beforeEnter: requireSeller 
     },
     {
         path: '/signup/seller',
         component: SellerPersonalInfo
     },
     {
-        path: '/seller/dashboard',
-        component: DashboardSeller
-    },
-    {
         path: '/seller/product',
-        component: product
+        component: product,
+        beforeEnter: requireSeller 
     },
     {
         path: '/seller/shipment',
-        component: shipping
-    },
-    {
-        path: '/seller/finance',
-        component: finance
+        component: shipping,
+        beforeEnter: requireSeller 
     },
     {
         path: '/signup/seller',
-        component: SellerPersonalInfo
+        component: SellerPersonalInfo,
+        beforeEnter: requireAdmin 
     },
     {
         path: '/signup/buyer',
