@@ -89,14 +89,11 @@ const routes = [
         path: '/seller/dashboard',
         component: DashboardSeller,
         beforeEnter: requireSeller 
-    },
-    {
-        path: '/seller/product',
-        component: product
-    },
+    },  
     {
         path: '/seller/finance',
-        component: finance
+        component: finance,
+        beforeEnter: requireSeller 
     },
     {
         path: '/signup/seller',
@@ -105,11 +102,12 @@ const routes = [
     {
         path: '/seller/product',
         component: product,
-        beforeResolve: requireSeller 
+        beforeEnter: requireSeller 
     },
     {
         path: '/seller/shipment',
-        component: shipping
+        component: shipping,
+        beforeEnter: requireSeller 
     },
     {
         path: '/signup/seller',

@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       isLoginPage: false,
-      isLoggedin: true,  //put here the flag if already loggedin or not 
+      isLoggedin: false,  //put here the flag if already loggedin or not 
       headerList: headerList,
       userLoggedIn: 'seller'
     }

@@ -72,22 +72,28 @@ export default {
     },
     methods: {
         async submit() {
-            try {
-                this.formInput.user_type = this.userIdentifier
-                const response = await axios.post('/api/auth/login', this.formInput);
-                if (response.status === 200 && response.data.status === true) {
-                    localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
-                    alert ('Successfuly Login')
-                    this.$router.push(response.data.url); // Use the named route
-                } else {
-                    // Authentication failed, handle error
-                    alert(response.data.error_data[0]);
-                }
-            } catch (ex) {
-                // Handle other errors here
-                alert('An error occurred while logging in.');
+    try {
+        this.formInput.user_type = this.userIdentifier;
+        const response = await axios.post('/api/auth/login', this.formInput);
+
+        if (response.status === 200 && response.data.status === true) {
+            const token = response.data.token;
+            localStorage.setItem('APP_DEMO_USER_TOKEN', token);
+            alert('Successfully logged in');
+            this.$router.push(response.data.url); // Use the named route
+        } else {
+            if (response.data.error) {
+                alert('Login failed: ' + response.data.error);
+            } else {
+                alert('Account not yet approved.');
             }
-        },
+        }
+    } catch (error) {
+        // Log the error for debugging
+        console.error('An error occurred while logging in:', error);
+        alert('An error occurred while logging in. Please try again.');
+    }
+}
     }
 }
 </script>
