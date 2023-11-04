@@ -23,47 +23,41 @@ class LoginController extends Controller
 
         $credentials = $request->only('username', 'password');
 
-
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         // If you reach here, the user is authenticated, and you have a JWT token.
         $user = JWTAuth::user();
         if ($user->approve == 1) {
             $response['status'] = true;
             $response['error_data'] = [];
             $response['user_data'] = [
-                    'user_type' => $user->user_type,
-                    'username' => $user->username,
-                    'password' => $user->password,
-                    'email' => $user->email,
-                    'firstname' => $user->firstname,
-                    'middlename' => $user->middleName,
-                    'lastname' => $user->lastName,
-                    'birthDate'  => $user->birthDate,
-                    'nickname' => $user->nickname,
-                    'zodiacSign' => $user->zodiacSign,
-                    'kpopGroup' => $user->kpopGroup,
-                    'kpopBias' => $user->kpopBias,
-                    'address' => $user->address,
-                    'zipCode' => $user->zipCode,
-                    'bankAccNum' => $user->bankAccNum,
-                    'govermentId1' => $user->govermentId1,
-                    'govermentId2' => $user->govermentId2
-                ];
+                'user_type' => $user->user_type,
+                'username' => $user->username,
+                'password' => $user->password,
+                'email' => $user->email,
+                'firstname' => $user->firstname,
+                'middlename' => $user->middleName,
+                'lastname' => $user->lastName,
+                'birthDate'  => $user->birthDate,
+                'nickname' => $user->nickname,
+                'zodiacSign' => $user->zodiacSign,
+                'kpopGroup' => $user->kpopGroup,
+                'kpopBias' => $user->kpopBias,
+                'address' => $user->address,
+                'zipCode' => $user->zipCode,
+                'bankAccNum' => $user->bankAccNum,
+                'govermentId1' => $user->govermentId1,
+                'govermentId2' => $user->govermentId2
+            ];
 
-
-                if ($user->user_type === 'seller') {
-                    $response['url'] = '/seller/dashboard';
-                } elseif ($user->user_type === 'buyer') {
-                    $response['url'] = '/shopping-page';
-                }
-                elseif ($user->user_type === 'admin') {
-                    $response['url'] = '/admin';
-                }
-            } else {
-                $response['error_status'] = '401';
-                $response['error_data'] = ['Account not yet approve.'];
+            if ($user->user_type === 'seller') {
+                $response['url'] = '/seller/dashboard';
+            } elseif ($user->user_type === 'buyer') {
+                $response['url'] = '/shopping-page';
+            } elseif ($user->user_type === 'admin') {
+                $response['url'] = '/admin/dashboard'; // Add an admin dashboard URL
             }
         } else {
             $response['error_status'] = '401';
