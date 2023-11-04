@@ -14,10 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',  // Use 'api' guard as the default
         'passwords' => 'users',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -40,14 +39,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+    
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'driver' => 'jwt',  // Use 'jwt' for API authentication
+            'provider' => 'users',  // Use 'users' provider for JWT
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -67,14 +64,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'eloquent',  // Use Eloquent model for user retrieval
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
