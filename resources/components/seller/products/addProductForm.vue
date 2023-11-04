@@ -12,7 +12,7 @@
                         </p>
                     </div>
                     <div class="flex justify-between items-center pb-3 m-1 ">
-                        <button class="bg-teal-500/75 px-6 py-1  rounded-full text-white mx-1" @click="">
+                        <button class="bg-teal-500/75 px-6 py-1  rounded-full text-white mx-1" @click="createNewProduct()">
                             save
                         </button>
                         <button class="bg-gray-500/75 px-4 py-1 rounded-full text-white"
@@ -47,7 +47,8 @@
                                                                     <span class="material-symbols-outlined">
                                                                         add_photo_alternate
                                                                     </span>
-                                                                    <p class="text-thin text-sm text-slate-400"> click in this
+                                                                    <p class="text-thin text-sm text-slate-400"> click in
+                                                                        this
                                                                         area.
                                                                     </p>
                                                                 </div>
@@ -64,7 +65,8 @@
                                                 </div>
                                                 <div class="grid md:grid-cols-12">
                                                     <div v-for="images in productInfo.product_image">
-                                                        <img :src="images.url" alt="" >
+                                                        <!-- fix height and wieght -->
+                                                        <img :src="images.url" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,19 +77,36 @@
                                                 <div class="relative">
                                                     <input type="text" name="price" id="price"
                                                         class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-16 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
-                                                        required="">
+                                                        v-model="productInfo.product_name">
                                                     <div>
                                                         <span class="flex justify-end text-slate-400">{{ productNameLength
                                                         }}/3000 </span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="grid gap-6 mb-3 md:grid-cols-2">
+                                                <div>
+                                                    <label for="price"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                                    <input type="text" name="price" id="price"
+                                                        class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+                                                        v-model="productInfo.category">
+                                                </div>
+                                                <div>
+                                                    <label for="price"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sub-Category</label>
+                                                    <input type="text" name="price" id="price"
+                                                        class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+                                                        v-model="productInfo.sub_category">
+                                                </div>
+                                            </div>
                                             <div>
                                                 <label for="price"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Display
+                                                    Amount </label>
                                                 <input type="text" name="price" id="price"
                                                     class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
-                                                    required="">
+                                                    v-model="productInfo.amount">
                                             </div>
                                             <div>
                                                 <label for="description"
@@ -95,28 +114,33 @@
                                                     Description</label>
                                                 <textarea id="description" rows="4"
                                                     class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
-                                                    placeholder="Enter description here" maxlength="3000" @input=""
-                                                    @v-model="">
+                                                    placeholder="Enter description here"
+                                                    v-model="productInfo.description">
                                             </textarea>
                                                 <span class="flex justify-end  text-slate-400">{{ prodDesc }}/3000 </span>
                                             </div>
                                             <div>
                                                 <label for="pre_order"
                                                     class="relative block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pre-order</label>
-                                                <div class="relative items-center justify-center">
-                                                    <input type="checkbox" name="price" id="price" class="">
-                                                    <span class="px-2">No</span>
-                                                    <p class="font-thin text-sm">I will ship out within 2 business days
+
+                                                <label v-for="option in preOrderOptions" :key="option.value"
+                                                    class="radio-label">
+                                                    <input type="radio" :id="option.id" :value="option.value"
+                                                        v-model="productInfo.pre_order" class="" />
+                                                    {{ option.label }}
+                                                    <p v-show="option.label == 'No'" class="font-thin text-sm">I will ship
+                                                        out within 2 business days
                                                         (excluding public holidays and courier service non-working days)</p>
-                                                </div>
-                                                <div class="relative items-center justify-center">
-                                                    <input type="checkbox" name="price" id="price" class="">
-                                                    <span class="px-2 ">Yes</span>
-                                                    <p class="font-thin text-sm">I need 7 business days to ship (between 7
+
+                                                    <p v-show="option.label == 'Yes'" class="font-thin text-sm">I need 7
+                                                        business days to ship (between 7
                                                         to
                                                         30)</p>
-                                                </div>
+
+                                                </label>
+
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +192,7 @@
                                             </table>
                                             <div>
                                                 <button type="button" class="p-2 border font-thin text-sm"
-                                                    @click="addVariation()"> Add
+                                                    @click="addVariation($event)"> Add
                                                     Vairation</button>
                                             </div>
                                         </div>
@@ -185,6 +209,7 @@
                                                 </div>
                                                 <div class="relative">
                                                     <input type="text" name="parcel size" id=""
+                                                        v-model="productInfo.shippingInfo.weight"
                                                         class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40">
                                                     <div class="">
                                                         <div
@@ -203,6 +228,7 @@
                                                 </div>
                                                 <div class="relative ">
                                                     <input type="text" name="parcel size" id=""
+                                                        v-model="productInfo.shippingInfo.parcel_size_x"
                                                         class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40">
                                                     <div class="">
                                                         <div
@@ -214,6 +240,7 @@
                                                 </div>
                                                 <div class="relative">
                                                     <input type="text" name="parcel size" id=""
+                                                        v-model="productInfo.shippingInfo.parcel_size_y"
                                                         class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40">
                                                     <div class="">
                                                         <div
@@ -225,6 +252,7 @@
                                                 </div>
                                                 <div class="relative mb-5">
                                                     <input type="text" name="parcel size" id=""
+                                                        v-model="productInfo.shippingInfo.parcel_size_z"
                                                         class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40">
                                                     <div class="">
                                                         <div
@@ -251,7 +279,7 @@
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Shipping
                                                         Fee</label>
                                                 </div>
-                                                <select id="category-create"
+                                                <select id="category-create" v-model="productInfo.shippingInfo.shipping_fee"
                                                     class="w-full  rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40">
                                                     <option selected="">Standard Local </option>
                                                     <option value="FL">Overseas</option>
@@ -282,6 +310,28 @@
 <script>
 import salesInfoHeader from './../../../js/config/tableConfig'
 import signupConfig from '../../../js/config/signupConfig'
+import { Modal } from 'flowbite';
+
+const $targetEl = document.getElementById('add-product-modal');
+
+// options with default values
+const options = {
+    placement: 'bottom-right',
+    backdrop: 'dynamic',
+    backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+    closable: true,
+    onHide: () => {
+        console.log('modal is hidden');
+    },
+    onShow: () => {
+        console.log('modal is shown');
+    },
+    onToggle: () => {
+        console.log('modal has been toggled');
+    }
+};
+
+const modal = new Modal($targetEl, options);
 
 export default {
     props: {
@@ -291,7 +341,11 @@ export default {
         return {
             salesInfoHeader: salesInfoHeader.saleInfo,
             prodDesc: 0,
-            productNameLength:  0,
+            preOrderOptions: [
+                { label: "Yes", value: true, id: 1 },
+                { label: "No", value: false, id: 2 }
+            ],
+            productNameLength: 0,
             numberOfFileInputted: 0,
             sellerId: '',
             sellername: '',
@@ -301,7 +355,8 @@ export default {
                 category: '',
                 sub_category: '',
                 description: '',
-                pre_order: null,
+                displayAmount: 0,
+                pre_order: false,
                 salesInfo: [
                     {
                         variation: '',
@@ -314,17 +369,24 @@ export default {
                     parcel_size_z: 0, //height
                     parcel_size_x: 0, //width
                     parcel_size_y: 0, //length
-                    shipping_fee: '',
+                    shipping_fee: 'Standard Local',
                 }
             }
         }
     },
+    watch: {
+        "productInfo.product_name"() {
+            this.productNameLength = this.productInfo.product_name.length
+        },
+        "productInfo.description"() {
+            this.prodDesc = this.productInfo.description.length
+        }
+        
+    },
     methods: {
         handleFileInput(event) {
             const files = event.target.files;
-
             const allowedExtensions = ['png', 'jpeg', 'jpg']; // Add any other allowed extensions
-
             let validFiles = [];
             const formData = []
             for (let i = 0; i < files.length; i++) {
@@ -341,7 +403,7 @@ export default {
                 alert('You can upload a maximum of 12 files.');
             } else {
                 this.numberOfFileInputted += validFiles.length;
-                for(const validfile in validFiles) {
+                for (const validfile in validFiles) {
                     this.productInfo.product_image.push(validFiles[validfile])
                     console.log(this.productInfo.product_image)
                 }                // Here, you can handle the validFiles array as needed (e.g., store or display them)
@@ -364,18 +426,18 @@ export default {
         },
         async createNewProduct() {
             try {
-                const response = await axios.post('/api/product/add',);
+                console.log(this.productInfo)
+                const response = await axios.post('/api/product/add', this.productInfo);
                 if (response.status === 200 && response.data.status === true) {
-                    localStorage.setItem('APP_DEMO_USER_TOKEN', response.data.token);
-                    alert('Successfuly Login')
-                    this.$router.push(response.data.url); // Use the named route
+                    alert('Successfuly added')
                 } else {
                     // Authentication failed, handle error
+
                     alert(response.data.error_data[0]);
                 }
             } catch (ex) {
                 // Handle other errors here
-                alert('An error occurred while logging in.');
+                alert(ex);
             }
         },
     }
