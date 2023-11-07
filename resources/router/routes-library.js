@@ -71,7 +71,7 @@ const routes = [
     {
         path: '/admin',
         component: AdminDashboard,
-        beforeEnter: requireAdmin 
+        beforeResolve: requireAdmin 
     },
     {
         path: '/admin/verify-seller',

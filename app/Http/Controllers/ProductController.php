@@ -26,8 +26,8 @@ class ProductController extends Controller
         'description' => 'required',
         'product_image' => 'required',
         'pre_order' => 'required',
-        'amount' => 'required',
-        'salesInfo' => 'required|array|min:1', // Ensure salesInfo is an array with at least one item
+        'displayAmount' => 'required',
+        'salesInfo' => 'required|array|min:1', 
         'salesInfo.*.price' => 'required|numeric',
         'salesInfo.*.stock' => 'required|integer',
         'salesInfo.*.variation' => 'required',
@@ -177,29 +177,107 @@ public function product_edit(Request $request, $id)
         return Response::json(['success' => true, 'cart_items' => Session::get('cart')]);
     }
 
-   public function getAllProductsPerSeller() {
-
-
+    public function getAllProductsPerSeller()
+{
     $products = Products::with('salesInfo', 'shippingInfo')
-    ->where('seller_id', 100) 
-    ->get();
+        ->where('seller_id', 1)
+        ->get();
 
-    return response()->json(['products' => $products]);
-        
+    $transformedProducts = [];
+
+    foreach ($products as $product) {
+        $transformedProducts[] = [
+            'sellerId' => $product->seller_id,
+            'sellername' => $product->seller_name,
+            'productInfo' => [
+                [
+                    'product_image' => $product->product_image,
+                    'product_name' => $product->product_name,
+                    'category' => $product->category,
+                    'sub_category' => $product->sub_category,
+                    'displayAmount' => $product->displayAmount,
+                    'product_description' => $product->description,
+                    'pre-order' => $product->pre_order == 1,
+                    'salesInfo' => $product->salesInfo->map(function ($sales) {
+                        return [
+                            'price' => $sales->price,
+                            'stock' => $sales->stock,
+                            'variation' => $sales->variation,
+                        ];
+                    })->toArray(),
+                    'shippingInfo' => $product->shippingInfo ? [
+                        'weight' => $product->shippingInfo->weight,
+                        'parcel_size_z' => $product->shippingInfo->parcel_size_z,
+                        'parcel_size_x' => $product->shippingInfo->parcel_size_x,
+                        'parcel_size_y' => $product->shippingInfo->parcel_size_y,
+                        'shipping_fee' => $product->shippingInfo->shipping_fee,
+                    ] : null,                    
+                ],
+            ],
+        ];
     }
+
+    return response()->json(['products' => $transformedProducts]);
+}
 
     public function getAllProducts () {
 
-    $products = Products::with('salesInfo', 'shippingInfo')->get();
+    /*$products = Products::with('salesInfo', 'shippingInfo')->inRandomOrder()->take(10)->get();
 
-    return response()->json(['products' => $products]);
+    return response()->json(['products' => $products]);*/
+    $products = Products::with('salesInfo', 'shippingInfo')->inRandomOrder()->take(10)->get();
+
+    $formattedProducts = [];
+
+    foreach ($products as $product) {
+        $formattedProduct = [
+            'sellerId' => $product->seller_id, 
+            'sellername' => $product->seller_name, 
+            'productInfo' => [
+                'product_id' => $product->id,
+                'displayAmount' => $product->displayAmount,
+                'product_image' => json_decode($product->product_image),
+                'product_name' => $product->product_name,
+                'category' => $product->category,
+                'sub_category' => $product->sub_category,
+                'product_description' => $product->description,
+                'pre-order_date' => $product->pre_order,
+                'salesInfo' => [],
+                'shippingInfo' => null, 
+            ],
+        ];
+
+        if ($product->shippingInfo) {
+            $formattedProduct['productInfo']['shippingInfo'] = [
+                'weight' => $product->shippingInfo->weight,
+                'parcel_size_z' => $product->shippingInfo->parcel_size_z,
+                'parcel_size_x' => $product->shippingInfo->parcel_size_x,
+                'parcel_size_y' => $product->shippingInfo->parcel_size_y,
+                'shipping_fee' => $product->shippingInfo->shipping_fee,
+            ];
+        }
+
+        foreach ($product->salesInfo as $salesInfo) {
+            $formattedSalesInfo = [
+                'salesInfo_id' => $salesInfo->id, // Replace with your salesInfo ID field
+                'price' => $salesInfo->price,
+                'stock' => $salesInfo->stock,
+                'variation' => $salesInfo->variation,
+            ];
+            $formattedProduct['productInfo']['salesInfo'][] = $formattedSalesInfo;
+        }
+
+        $formattedProducts[] = $formattedProduct;
+    }
+
+    return response()->json($formattedProducts);
         
     }
-    
-    public function getProductsbyID () {
+            
+   public function getProductsbyID () {
 
         $products = Products::with('salesInfo', 'shippingInfo')
-        ->where('id', 1)
+        ->where('id', 21)
         ->get();
 
     return response()->json(['products' => $products]);

@@ -1,7 +1,7 @@
 <template>
 <h2 class="text-center" style="margin-top: 150px;">Buyer's Information</h2>
 <div class="container" style="margin-top: 80px;">
-<table class="table table-bordered mt-">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">Buyer id</th>
@@ -26,5 +26,5 @@
 </div>
 </template>
 <script>
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 </script>

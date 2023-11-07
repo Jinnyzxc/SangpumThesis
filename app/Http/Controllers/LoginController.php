@@ -61,7 +61,7 @@ class LoginController extends Controller
             } elseif ($user->user_type === 'buyer') {
                 $response['url'] = '/shopping-page';
             } elseif ($user->user_type === 'admin') {
-                $response['url'] = '/admin/dashboard'; // Add an admin dashboard URL
+                $response['url'] = '/admin'; // Add an admin dashboard URL
             }
         } else {
             $response['error_status'] = '401';
