@@ -1,6 +1,6 @@
 <template>
   <!-- Not Yet loggedin -->
-  <navbar v-if="isLoggedin === false"
+  <navbar v-show="false"
     class="flex item-center justify-between flex-wrap  fixed top-0 z-10 bg-transparent-50 shadow-lg border-b border-white-400 w-full">
     <div class="flex items-center flex-shrink-0 px-8">
       <ul class="flex ">
@@ -34,12 +34,25 @@
     </div>
   </navbar>
   <!-- Already Loggedin -->
-  <navbar v-if="isLoggedin === true"
+  <navbar v-show="true"
     class="flex item-center justify-between flex-wrap  fixed top-0 z-10 bg-gradient-to-tl from-teal-600 to-emerald-400  shadow-lg border-b border-white-400 w-full">
     <div class="flex items-center flex-shrink-0 px-8">
       <ul class="flex " v-for="header in currentHeader.left">
         <li class="">
-          <a :href="header.url"
+
+            <div class="relative scale-75"  v-if="header.menuheader === 'shopping_cart'">
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="h-8 w-8 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                </svg>
+                <span class="absolute -top-2 left-4 rounded-full bg-red-500 p-0.5 px-2 text-sm text-red-50"> 4{{
+                  totalCartItem }}</span>
+              </button>
+            </div>
+
+          <a :href="header.url" v-else
             class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2 text-white font-bold py-2 px-4">
             <span v-if="header.isIcon == true" class="material-symbols-outlined"> {{ header.iconClass }}</span>
             <span v-else>{{ header.menuheader }}</span>
@@ -53,8 +66,14 @@
     <div class="flex items-center ">
       <ul class="flex items-center" v-for="header in currentHeader.right">
         <li class="inline-block ">
+          <a v-if="header.menuheader === 'logout'" @click="logout(header)"
+            class="inline-block no-underline hover:text-black font-medium text-lg  px-4 lg:-ml-2 text-white font-bold  px-4 border rounded-full">
+            <span v-if="header.isIcon == true" class="material-symbols-outlined"> {{ header.iconClass }}</span>
+            <span v-else>{{ header.menuheader }}</span>
+          </a>
           <a :href="header.url"
-            class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2 text-white font-bold py-2 px-4">
+            class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2 text-white font-bold py-2 px-4"
+            v-else>
             <span v-if="header.isIcon == true" class="material-symbols-outlined"> {{ header.iconClass }}</span>
             <span v-else>{{ header.menuheader }}</span>
           </a>
@@ -74,48 +93,58 @@ export default {
   components: {
     signinRegister
   },
+  props: {
+    totalCartItem: Number
+  },
   data() {
     return {
       isLoginPage: false,
       isLoggedin: false,  //put here the flag if already loggedin or not 
       headerList: headerList,
+      getUserType: 'buyer'
     }
   },
+  created() {
+
+  },
   computed: {
+    getUserType() {
+      return getUserType = () => 'buyer'
+    },
+    isUserLoggedIn() {
+      return isUserLoggedIn
+    },
     currentHeader() {
-      console.log('dito po', getUserType())
-      if (getUserType() === 'seller') {
+      if (getUserType() === 'seller' && isUserLoggedIn) {
         return this.headerList.sellerHeader
       }
-      if (getUserType() === 'buyer') {
+      if (this.getUserType === 'buyer' && isUserLoggedIn) {
         return this.headerList.buyerHeader
       }
-      if (getUserType() === 'admin') {
+      if (getUserType() === 'admin' && isUserLoggedIn) {
         return this.headerList.adminHeader
       }
     },
   },
   watch: {
-    getUserType: {
+    isUserLoggedIn: {
       handler(val) {
-        console.log('val', val)
-        if (!val) return 
-        this.hasUserTypeData()
+        if (val !== null) {
+          this.isLoggedin = true
+        }
+        else {
+          this.isLoggedin = false
+        }
       },
       immediate: true
     }
   },
   methods: {
-    hasUserTypeData() {
-      if (getUserType() !== null) { //add condition of isUserLoggedIn 
-        this.isLoggedin = true
-      }
-      else {
-        this.isLoggedin = false;
-      }
+    logout() {
+      // localStorage.removeItem('APP_DEMO_USER_TOKEN');
+      localStorage.clear();
     },
     isloginDisplay(value) {
-      console.log(getUserType())
       this.isLoginPage = value;
     },
   }

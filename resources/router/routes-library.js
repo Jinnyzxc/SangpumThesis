@@ -18,6 +18,7 @@ import { isUserLoggedIn, getUserType } from './../js/config/login';
 import finance from './../components/seller/finance/viewFinance.vue';
 import shipping from './../components/seller/shipping/viewShipmentList.vue';
 import LoginAdmin from './../components/admin/loginAdmin.vue'
+import productOverView from './../components/buyer/productOverView.vue'
 
 
 const requireAuth = (to, from, next) => {
@@ -65,6 +66,10 @@ const routes = [
     {
         path: '/login/admin',
         component: LoginAdmin,
+    },
+    {
+        path: '/view/product/',
+        component: productOverView,
     },
     {
         path: '/admin',

@@ -1,0 +1,120 @@
+{
+    "randomproduct": [
+        {
+            "sellerId": "GUID",
+            "sellername": "Jinny",
+            "productInfo": {
+                "product_id": "GUID",
+                "displayAmount": "", 
+                "product_image": [
+                    {
+                        "url": "https://dynamic.zacdn.com/IvGyod4B3QIBrz8z0xSepNYDWwQ=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/puritan-4395-1965602-1.jpg"
+                    },
+                    {
+                        "url": "https://cdn.vectorstock.com/i/preview-1x/41/69/set-of-tshirts-with-different-colors-vector-19934169.jpg"
+                    },
+                    {
+                        "url": "https://dynamic.zacdn.com/IvGyod4B3QIBrz8z0xSepNYDWwQ=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/puritan-4395-1965602-1.jpg"
+                    },
+                    {
+                        "url": "https://cdn.vectorstock.com/i/preview-1x/41/69/set-of-tshirts-with-different-colors-vector-19934169.jpg"
+                    }
+                ],
+                "product_name": "product name ",
+                "category": "category name",
+                "sub_category": "string",
+                "product_description": "some description",
+                "pre-order_date": "",
+                "salesInfo": [
+                    {
+                        "salesInfo_id": "1", 
+                        "price": 2500,
+                        "stock": 0,
+                        "variation": "Gray",
+                        "sales": "sales"
+                    },
+                    {
+                        "salesInfo_id": "2",
+                        "price": 200.0,
+                        "stock": 0,
+                        "variation": "white"
+                    },
+                    {
+                        "salesInfo_id": "",
+                        "price": 500.0,
+                        "stock": 0,
+                        "variation": "blue"
+                    },
+                    {
+                        "salesInfo_id": "",
+                        "price": 1000.0,
+                        "stock": 0,
+                        "variation": "teal"
+                    }
+                ],
+                "shippingInfo": {
+                    "weight": 0,
+                    "parcel_size_z": 0,
+                    "parcel_size_x": 0,
+                    "parcel_size_y": 0,
+                    "shipping_fee": "string"
+                }
+            }
+        }, 
+        {
+            "sellerId": "GUID",
+            "sellername": "Jude",
+            "productInfo": {
+                "product_id": "GUID",
+                "displayAmount": "", 
+                "product_image": [
+                    {
+                        "url": "https://cdn.vectorstock.com/i/preview-1x/41/69/set-of-tshirts-with-different-colors-vector-19934169.jpg"
+                    },
+                    {
+                        "url": "https://dynamic.zacdn.com/IvGyod4B3QIBrz8z0xSepNYDWwQ=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/puritan-4395-1965602-1.jpg"
+                    }
+                ],
+                "product_name": "product name ",
+                "category": "category name",
+                "sub_category": "string",
+                "product_description": "some description",
+                "pre-order_date": "",
+                "salesInfo": [
+                    {
+                        "salesInfo_id": "1", 
+                        "price": 2500,
+                        "stock": 0,
+                        "variation": "Gray",
+                        "sales": "sales"
+                    },
+                    {
+                        "salesInfo_id": "2",
+                        "price": 200.0,
+                        "stock": 0,
+                        "variation": "white"
+                    },
+                    {
+                        "salesInfo_id": "",
+                        "price": 500.0,
+                        "stock": 0,
+                        "variation": "blue"
+                    },
+                    {
+                        "salesInfo_id": "",
+                        "price": 1000.0,
+                        "stock": 0,
+                        "variation": "teal"
+                    }
+                ],
+                "shippingInfo": {
+                    "weight": 0,
+                    "parcel_size_z": 0,
+                    "parcel_size_x": 0,
+                    "parcel_size_y": 0,
+                    "shipping_fee": "string"
+                }
+            }
+        }
+    ]
+    }

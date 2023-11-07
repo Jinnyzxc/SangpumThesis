@@ -154,7 +154,6 @@
 <script>
 import AddProductForm from './addProductForm.vue'
 import menulist from './../../static/menuList.vue'
-import sampleData from './../../../js/config/sampleData.json'
 import {modal } from './../../../js/modal/modalService'
 import salesInfoHeader from './../../../js/config/tableConfig'
 
