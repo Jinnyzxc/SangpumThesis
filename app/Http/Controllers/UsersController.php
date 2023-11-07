@@ -128,19 +128,6 @@ public function seller(Request $request) {
         return response()->json($response);
     }
     
-    public function UsersApproval(Request $request) {
-        $data = User::find($request->id);
-        $data->approve = 1;
-
-
-        if (!$data->save()) {
-            $response['message'] = 'Error on updating. Contact your support.';
-        } else {
-            $response['message'] = 'Account Successfully Approved!';
-            $response['status'] = true;
-        }
-        return response()->json($response);
-    }
 
     public function getAllSellersApprove() {
         $matchThese = [['user_type', '=', 'sellers'], ['approve', '=', '1']];
@@ -165,5 +152,30 @@ public function seller(Request $request) {
 
         return response()->json($response);
     }
+
+
+    public function user_approval (Request $request, $id)
+{
+    $response = $this->json_response;
+
+    $approval = User::find($id);
+
+    if (!$approval) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+    
+    $approval->approve = 1;
+
+    if (!$approval->save()) {
+        $response['message'] = 'Error on Approving. Contact your support.';
+    } else {
+
+        $response['message'] = 'Buyer Successfully Approve!';
+        $response['status'] = true;
+    }
+
+    return response()->json($response);
+}
+
 
 }

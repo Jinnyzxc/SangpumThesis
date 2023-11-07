@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -30,9 +29,14 @@ class LoginController extends Controller
         // If you reach here, the user is authenticated, and you have a JWT token.
         $user = JWTAuth::user();
         if ($user->approve == 1) {
+            Session::put('user_id', $user->id);
+            Session::put('username', $user->username); // Use the Session facade
+            Session::put('user_type', $user->user_type);
+            
             $response['status'] = true;
             $response['error_data'] = [];
             $response['user_data'] = [
+                'user_id' => $user->id,
                 'user_type' => $user->user_type,
                 'username' => $user->username,
                 'password' => $user->password,
@@ -69,7 +73,10 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request) {
-        JWTAuth::invalidate(JWTAuth::getToken()); // Invalidate the current token
-        return response()->json(['message' => 'Successfully logged out']);
+       // JWTAuth::invalidate(JWTAuth::getToken()); // Invalidate the current token
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }
