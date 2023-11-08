@@ -13,11 +13,13 @@ import ShoppingList from './../components/buyer/shoppingList.vue';
 import ShoppingCart from './../components/buyer/shoppingCart.vue';
 import  AdminVerifySeller from './../components/admin/verificationSeller.vue';
 import  AdminVerifyBuyer from './../components/admin/verificationBuyer.vue';
+import  Userlist from './../components/admin/Userlist.vue';
 import product from './../components/seller/products/viewProductList.vue';
 import { isUserLoggedIn, getUserType } from './../js/config/login';
 import finance from './../components/seller/finance/viewFinance.vue';
 import shipping from './../components/seller/shipping/viewShipmentList.vue';
 import LoginAdmin from './../components/admin/loginAdmin.vue'
+import EditProductForm from './../components/seller/products/editProductForm.vue';
 import productOverView from './../components/buyer/productOverView.vue'
 
 
@@ -115,6 +117,11 @@ const routes = [
         beforeEnter: requireSeller 
     },
     {
+        path: '/products/:id/edit',
+        component: EditProductForm,
+        beforeEnter: requireSeller 
+    },
+    {
         path: '/seller/shipment',
         component: shipping,
         beforeEnter: requireSeller 
@@ -153,6 +160,11 @@ const routes = [
         path: '/home',
         component: Home,
         name: 'home'
+    },
+    {
+        path: '/userlist',
+        component: Userlist,
+        name: 'userlist'
     },
     {
         path: '/:pathMatch(.*)*',
