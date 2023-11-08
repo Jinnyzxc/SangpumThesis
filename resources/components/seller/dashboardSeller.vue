@@ -90,9 +90,7 @@ export default {
         async getProducts() {
             const res = await fetch("https://652d6314f9afa8ef4b275e12.mockapi.io/product-list");
             const data = await res.json();
-            console.log(data)
             this.products = new Proxy(data, {});
-            console.log(this.products);
         },
         async addToCart(id, quantity) {
             try {
