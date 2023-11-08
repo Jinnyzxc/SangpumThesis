@@ -80,7 +80,6 @@ export default {
     },
     methods: {
         async submit() {
-
             try {
                 this.formInput.user_type = this.userIdentifier;
                 const response = await axios.post('/api/auth/login', this.formInput);
@@ -88,6 +87,9 @@ export default {
                 if (response.status === 200 && response.data.status === true) {
                     const token = response.data.token;
                     localStorage.setItem('APP_DEMO_USER_TOKEN', token);
+                    vuex.dispatch('setIsLoggedIn', true);
+
+                    console.log(vuex.state.isLoggedIn )
                     alert('Successfully logged in');
                     this.$router.push(response.data.url); // Use the named route
                 } else {

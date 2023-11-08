@@ -14,24 +14,42 @@ export default{
                 isIcon: true,
                 iconClass: 'storefront',
                 url: '/seller/dashboard'
+            },
+            {
+                menuheader: 'logout',
+                isIcon: false,
+                iconClass: '',
+                url: '/'
             }
         ]
     },
     buyerHeader: {
         left: [
             {
-                menuheader: 'sms',
+                menuheader: 'shopping_cart',
                 isIcon: true,
-                iconClass: 'sms',
-                url: '/seller/dashboard'
+                iconClass: 'shopping_cart',
+                url: '/shopping-cart'
             }
         ],
         right: [
             {
-                menuheader: 'storefront',
+                menuheader: 'sms',
                 isIcon: true,
                 iconClass: 'sms',
-                url: '/seller/dashboard'
+                url: '/seller/dashboard' //change this url into chats  
+            },
+            {
+                menuheader: 'person',
+                isIcon: true,
+                iconClass: 'person',
+                url: '/seller/dashboard' //change this url into chats  
+            },
+            {
+                menuheader: 'logout',
+                isIcon: false,
+                iconClass: '',
+                url: '/'
             }
         ]
     },
@@ -39,6 +57,12 @@ export default{
         left: [
         ],
         right: [
+            {
+                menuheader: 'logout',
+                isIcon: false,
+                iconClass: '',
+                url: '/'
+            }
         ]
     }
 }

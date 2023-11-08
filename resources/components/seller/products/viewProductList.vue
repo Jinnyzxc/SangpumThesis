@@ -224,11 +224,16 @@
   ></AddProductForm>
 </template>
 <script>
-import AddProductForm from "./addProductForm.vue";
-import menulist from "./../../static/menuList.vue";
+
+
 import sampleData from "./../../../js/config/sampleData.json";
-import { modal } from "./../../../js/modal/modalService";
-import salesInfoHeader from "./../../../js/config/tableConfig";
+
+
+import AddProductForm from './addProductForm.vue'
+import menulist from './../../static/menuList.vue'
+import {modal } from './../../../js/modal/modalService'
+import salesInfoHeader from './../../../js/config/tableConfig'
+
 
 export default {
   components: {
