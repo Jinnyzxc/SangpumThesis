@@ -72,6 +72,8 @@
 
 <script>
 import menulist from './../static/menuList.vue'
+import { isUserLoggedIn } from '../../js/config/login';
+import { vuex } from '../../js/store/store';
 export default {
     components: {
         menulist
@@ -80,11 +82,31 @@ export default {
         return {
             products: [],
             isLoggedIn: true,
-            titlePage: "My shop"
+            titlePage: "My shop",
+            sellerInfo:{}
+        }
+    },
+    computed: {
+        isUserLoggedInData() {
+            return isUserLoggedIn()
+        },
+        userDataInfo() {
+            console.log(vuex.state.userDataInfo)
+            return vuex.state.userDataInfo
+        }
+    },
+    watch: {
+        userDataInfo(val){
+            if(!val){
+             return 
+            }
+            this.sellerInfo = this.userDataInfo
         }
     },
     created() {
         this.getProducts();
+    },
+    mounted() {
     },
     methods: {
         async getProducts() {

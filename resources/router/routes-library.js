@@ -27,7 +27,7 @@ const requireAuth = (to, from, next) => {
     if (isUserLoggedIn()) {
         next(); 
     } else {
-        next('/login'); 
+        next('/'); 
     }
 };
 
@@ -44,7 +44,7 @@ const requireSeller = (to, from, next) => {
     if (isUserLoggedIn() && getUserType() === 'seller') {
         next(); 
     } else {
-        next('/login');
+        next('/');
     }
 };
 
@@ -52,7 +52,7 @@ const requireSellerOrBuyer = (to, from, next) => {
     if (isUserLoggedIn() && (getUserType() === 'seller' || getUserType() === 'buyer')) {
         next();
     } else {
-        next('/login');
+        next('/');
     }      
 };
 
@@ -60,7 +60,7 @@ const requireBuyer = (to, from, next) => {
     if (isUserLoggedIn() && getUserType() === 'seller') {
         next();
     } else {
-        next('/login'); 
+        next('/'); 
     }
 };
 

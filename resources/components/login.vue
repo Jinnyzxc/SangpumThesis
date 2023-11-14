@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
+    <div v-if="isNotLogin" class="min-h-screen bg-gradient-to-tl from-slate-600 to-emerald-400  flex flex-col justify-center sm:py-12">
         <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
             <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                 <div class="flex justify-center
@@ -52,6 +52,7 @@
 import axios from 'axios';
 import { vuex } from './../js/store/store'
 
+
 export default {
     props: {
         adminUserType: String
@@ -63,6 +64,7 @@ export default {
                 password: '',
                 user_type: ''
             },
+            isNotLogin: true,
             errorMessage: ''
         }
     },
@@ -83,21 +85,19 @@ export default {
             try {
                 this.formInput.user_type = this.userIdentifier;
                 const response = await axios.post('/api/auth/login', this.formInput);
-
                 if (response.status === 200 && response.data.status === true) {
                     const token = response.data.token;
                     localStorage.setItem('APP_DEMO_USER_TOKEN', token);
-                    vuex.dispatch('setIsLoggedIn', true);
-
-                    console.log(vuex.state.isLoggedIn )
+                    vuex.dispatch('setUserData', response.data.user_data)
                     alert('Successfully logged in');
-                    this.$router.push(response.data.url); // Use the named route
+                    this.isNotLogin = false
+                    window.location.href= response.data.url;
+                    this.$router.push(response.data.url); 
                 } else {
                     if (response.data.error) {
                         alert('Login failed: ' + response.data.error);
                     } else {
                         alert('Account not yet approved.');
-
                     }
                 }
             } catch (error) {

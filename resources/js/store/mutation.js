@@ -1,6 +1,7 @@
 export const state = {
     userIdentifier: null,
-    commonSignUpData :{}
+    commonSignUpData :{},
+    userDataInfo: {}
 }
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
     },
     setCommonSignUpData (state, data) {
         state.commonSignUpData = data;
+    },
+    setUserData(state, data){
+        state.userDataInfo = data;
     }
 }
 

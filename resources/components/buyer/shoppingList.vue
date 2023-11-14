@@ -11,8 +11,8 @@
                     <div class="m-16">
                         <div class="">
                             <div class="flex justify-center  grid grid-cols-5 gap-6">
-                                <div class="items-center group" v-for="product in products" :key="product.id">
-                                    <div class="relative overflow-hidden">
+                                <div class="items-center " v-for="product in products" :key="product.id">
+                                    <div class="relative overflow-hidden group">
                                         <img :src="product.productInfo.product_image[0].url" alt="wrapkit" class="object-cover rounded-lg" />
                                         <div
                                             class="absolute h-full w-full bg-black/20 flex items-center justify-center -bottom-10 group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="card border-0">
                                         <h6>
-                                            <a href="#" class="link">{{ product.name }} </a>
+                                            <a :href="'/view/product/' + product.productInfo.product_id" class="link">{{ product.product_name }} </a>
                                         </h6>
                                         <h6 class="subt">by {{ product.sellername }}</h6>
                                         <h5 class="font-medium m-b-30">
@@ -59,7 +59,11 @@ export default {
             this.products = new Proxy(data, {});
             console.log(this.products);
         },
+        viewProduct(){
+
+        },
         async addToCart(id, quantity) {
+            this.$router.push('/view/product')
             try {
                 const response = await fetch("https://652d6314f9afa8ef4b275e12.mockapi.io/product-list", {
                     method: "POST",

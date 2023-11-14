@@ -37,13 +37,13 @@ export default{
                 menuheader: 'sms',
                 isIcon: true,
                 iconClass: 'sms',
-                url: '/seller/dashboard' //change this url into chats  
+                url: '/buyer/chat' //change this url into chats  
             },
             {
                 menuheader: 'person',
                 isIcon: true,
                 iconClass: 'person',
-                url: '/seller/dashboard' //change this url into chats  
+                url: '/buyer/dashboard' //change this url into chats  
             },
             {
                 menuheader: 'logout',

@@ -225,10 +225,6 @@
 </template>
 <script>
 
-
-import sampleData from "./../../../js/config/sampleData.json";
-
-
 import AddProductForm from './addProductForm.vue'
 import menulist from './../../static/menuList.vue'
 import {modal } from './../../../js/modal/modalService'
@@ -244,8 +240,8 @@ export default {
     return {
       showCart: false,
       updateProduct: {},
-      seller_id: "",
-      seller_name: "",
+      seller_id: "104",
+      seller_name: "jude",
       products: {},
       numberOfProducts: 0,
       pageIndex: 2,

@@ -154,7 +154,7 @@
                           name="price"
                           id="price"
                           class="w-full rounded-lg border border-slate-200 px-2 py-1 pr-8 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
-                          v-model="productInfo.amount"
+                          v-model="productInfo.displayAmount"
                         />
                       </div>
                       <div>
@@ -499,15 +499,15 @@ export default {
       ],
       productNameLength: 0,
       numberOfFileInputted: 0,
-      seller_id: "",
-      seller_name: "",
+      seller_id: "110",
+      seller_name: "hannah",
       productInfo: {
         product_image: [],
         product_name: "",
         category: "",
         sub_category: "",
         description: "",
-        displayAmount: 0,
+        displayAmount: "",
         pre_order: false,
         salesInfo: [
           {

@@ -4,5 +4,8 @@ export const actions = {
     },
     setCommonSignUpData ({commit}, data){
         commit('setCommonSignUpData', data)
+    },
+    setUserData({commit}, data){
+        commit('setUserData', data)
     }
 }

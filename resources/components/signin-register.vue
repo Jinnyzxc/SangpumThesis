@@ -68,7 +68,6 @@ export default {
             else{
                 this.$router.push('/signup')
             }
-            modal.hide()
         }
     }
 }

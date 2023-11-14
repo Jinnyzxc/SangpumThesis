@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="h-screen bg-gray-100 pt-20">
+            <button @click="shoppingPage()"> Go back shopping</button>
             <h1 class="mb-10 text-center text-2xl font-bold">Shopping Bag</h1>
             <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                 <div class="rounded-lg md:w-2/3">
@@ -104,6 +105,9 @@ export default {
         this.getCartItems();
     },
     methods: {
+        shoppingPage(){
+            this.$router.push('/shopping-page')
+        },
         async getCartItems() {
             try {
                 const res = await fetch("https://652d6314f9afa8ef4b275e12.mockapi.io/Cart");
